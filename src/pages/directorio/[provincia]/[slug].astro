@@ -1,0 +1,661 @@
+---
+import BaseHead from '../../../components/BaseHead.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import { SITE_TITLE } from '../../../consts';
+import {
+	getProvincias,
+	getProvincia,
+	getCapitalNegocios,
+	getSubcities,
+	getSubcityNegocios,
+	getSubcityNombre,
+	getNegocioCapital,
+	slugify,
+	formatCategoria,
+	renderEstrellas,
+} from '../../../data/directorio';
+
+export function getStaticPaths() {
+	const provincias = getProvincias();
+	const paths: { params: { provincia: string; slug: string }; props: { type: string } }[] = [];
+	const generated = new Set<string>();
+
+	for (const p of provincias) {
+		// Sub-city listing pages
+		const subcities = getSubcities(p.slug);
+		const subcitySlugs = new Set<string>();
+		for (const sc of subcities) {
+			const key = `${p.slug}/${sc.slug}`;
+			if (!generated.has(key)) {
+				generated.add(key);
+				subcitySlugs.add(sc.slug);
+				paths.push({
+					params: { provincia: p.slug, slug: sc.slug },
+					props: { type: 'subcity' },
+				});
+			}
+		}
+
+		// Capital business detail pages
+		const capitalNegocios = getCapitalNegocios(p.slug);
+		const seenSlugs = new Set<string>();
+		for (const n of capitalNegocios) {
+			const nSlug = slugify(n.nombre);
+			if (!nSlug || seenSlugs.has(nSlug) || subcitySlugs.has(nSlug)) continue;
+			seenSlugs.add(nSlug);
+			const key = `${p.slug}/${nSlug}`;
+			if (!generated.has(key)) {
+				generated.add(key);
+				paths.push({
+					params: { provincia: p.slug, slug: nSlug },
+					props: { type: 'negocio' },
+				});
+			}
+		}
+	}
+
+	return paths;
+}
+
+const { provincia, slug } = Astro.params;
+const { type } = Astro.props;
+const prov = getProvincia(provincia!);
+
+if (!prov) {
+	return Astro.redirect('/404');
+}
+
+// ── SUBCITY DATA ──
+const subcityNegocios = type === 'subcity' ? getSubcityNegocios(provincia!, slug!) : [];
+const subcityNombre = type === 'subcity' ? getSubcityNombre(provincia!, slug!) : '';
+
+// ── NEGOCIO DATA ──
+const negocio = type === 'negocio' ? getNegocioCapital(provincia!, slug!) : undefined;
+const otrosNegocios = type === 'negocio' ? getCapitalNegocios(provincia!).filter((n) => slugify(n.nombre) !== slug).slice(0, 6) : [];
+
+const attrLabels: Record<string, string> = {
+	has_restroom: 'Baño disponible',
+	has_restroom_unisex: 'Baño unisex',
+	has_wi_fi: 'WiFi',
+	has_wheelchair_accessible_entrance: 'Accesible',
+	requires_appointments: 'Solo con cita previa',
+	recommends_appointment: 'Se recomienda cita',
+	accepts_walk_ins: 'Sin cita previa',
+	pay_credit_card: 'Tarjeta de crédito',
+	pay_debit_card: 'Tarjeta de débito',
+	pay_mobile_nfc: 'Pago móvil NFC',
+	requires_cash_only: 'Solo efectivo',
+	welcomes_lgbtq: 'LGBTQ+ friendly',
+	is_transgender_safespace: 'Espacio seguro trans',
+	welcomes_children: 'Niños bienvenidos',
+	is_owned_by_women: 'Negocio de mujeres',
+	has_onsite_services: 'Servicio presencial',
+};
+
+const attrList = negocio ? Object.values(negocio.atributos || {}).flat().map((attr: any) => ({
+	key: attr,
+	label: attrLabels[attr] || String(attr).replace(/_/g, ' '),
+})) : [];
+
+const diasSemana = {
+	monday: 'Lunes',
+	tuesday: 'Martes',
+	wednesday: 'Miércoles',
+	thursday: 'Jueves',
+	friday: 'Viernes',
+	saturday: 'Sábado',
+	sunday: 'Domingo',
+} as const;
+---
+
+<!doctype html>
+<html lang="es">
+	<head>
+		{type === 'subcity' ? (
+			<BaseHead
+				title={`Salones de Uñas en ${subcityNombre}, ${prov.nombre} - ${subcityNegocios.length} centros | ${SITE_TITLE}`}
+				description={`Los ${subcityNegocios.length} mejores salones de uñas en ${subcityNombre} (${prov.nombre}). Direcciones, teléfonos, valoraciones y horarios actualizados.`}
+			/>
+		) : negocio ? (
+			<BaseHead
+				title={`${negocio.nombre} - Salón de uñas en ${prov.capital} | ${SITE_TITLE}`}
+				description={negocio.descripcion ? negocio.descripcion.slice(0, 160) : `${negocio.nombre}: salón de uñas en ${prov.capital}. Dirección, teléfono, valoraciones y horarios.`}
+			/>
+		) : (
+			<BaseHead title={`${SITE_TITLE}`} description="" />
+		)}
+
+		{type === 'subcity' && (
+			<script type="application/ld+json" set:html={JSON.stringify({
+				"@context": "https://schema.org",
+				"@type": "ItemList",
+				"name": `Salones de uñas en ${subcityNombre}`,
+				"numberOfItems": subcityNegocios.length,
+				"itemListElement": subcityNegocios.slice(0, 20).map((n, i) => ({
+					"@type": "ListItem",
+					"position": i + 1,
+					"item": {
+						"@type": "NailSalon",
+						"name": n.nombre,
+						"address": n.direccion,
+						...(n.telefono ? { "telephone": n.telefono } : {}),
+						...(n.rating ? { "aggregateRating": { "@type": "AggregateRating", "ratingValue": n.rating, "reviewCount": n.num_resenas } } : {}),
+					}
+				}))
+			})} />
+		)}
+
+		{type === 'negocio' && negocio && (
+			<script type="application/ld+json" set:html={JSON.stringify({
+				"@context": "https://schema.org",
+				"@type": "NailSalon",
+				"name": negocio.nombre,
+				"address": {
+					"@type": "PostalAddress",
+					"streetAddress": negocio.direccion,
+					"addressLocality": prov.capital,
+					"addressRegion": negocio.region,
+					"postalCode": negocio.codigo_postal,
+					"addressCountry": "ES"
+				},
+				...(negocio.telefono ? { "telephone": negocio.telefono } : {}),
+				...(negocio.web ? { "url": negocio.web } : {}),
+				...(negocio.rating ? {
+					"aggregateRating": {
+						"@type": "AggregateRating",
+						"ratingValue": negocio.rating,
+						"reviewCount": negocio.num_resenas,
+						"bestRating": 5
+					}
+				} : {}),
+			})} />
+		)}
+
+		<style>
+			.container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+
+			.breadcrumb { padding: 1rem 0; font-size: 0.82rem; color: rgb(var(--gray)); }
+			.breadcrumb a { color: var(--accent); text-decoration: none; }
+			.breadcrumb a:hover { text-decoration: underline; }
+			.breadcrumb span { margin: 0 0.4rem; }
+
+			.page-header {
+				background: linear-gradient(135deg, #fff0f5 0%, #fce8ef 45%, #fffafc 100%);
+				padding: 3rem 1.5rem 2.5rem;
+			}
+			.page-header-inner { max-width: 1200px; margin: 0 auto; }
+			.page-header h1 {
+				font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+				color: rgb(var(--black));
+				margin-bottom: 0.5rem;
+				font-weight: 800;
+			}
+			.page-header h1 em { font-style: normal; color: var(--accent); }
+			.page-header p {
+				color: rgb(var(--gray));
+				font-size: 1rem;
+				max-width: 600px;
+				line-height: 1.6;
+				margin: 0;
+			}
+			.header-stats {
+				display: flex;
+				gap: 2rem;
+				margin-top: 1.5rem;
+			}
+			.header-stat {
+				display: flex;
+				align-items: center;
+				gap: 0.5rem;
+				font-size: 0.88rem;
+				color: rgb(var(--gray-dark));
+			}
+			.header-stat strong { color: var(--accent); }
+
+			/* ── LISTINGS ── */
+			.listings-section { padding: 2.5rem 0 4rem; }
+			.listings-grid { display: grid; gap: 1rem; }
+			.listing-card {
+				background: white;
+				border-radius: 14px;
+				padding: 1.4rem 1.6rem;
+				border: 1px solid rgba(200,57,92,0.08);
+				display: grid;
+				grid-template-columns: 1fr auto;
+				gap: 1rem;
+				align-items: start;
+				transition: all 0.2s;
+			}
+			.listing-card:hover {
+				box-shadow: 0 6px 24px rgba(200,57,92,0.1);
+				border-color: rgba(200,57,92,0.2);
+			}
+			.listing-name { font-size: 1.05rem; font-weight: 700; color: rgb(var(--black)); margin: 0 0 0.3rem; }
+			.listing-name a { color: inherit; text-decoration: none; }
+			.listing-name a:hover { color: var(--accent); }
+			.listing-cat {
+				display: inline-block;
+				background: var(--accent-light);
+				color: var(--accent);
+				font-size: 0.72rem;
+				font-weight: 700;
+				padding: 0.15rem 0.55rem;
+				border-radius: 50px;
+				margin-bottom: 0.6rem;
+			}
+			.listing-meta { display: flex; flex-direction: column; gap: 0.35rem; font-size: 0.85rem; color: rgb(var(--gray)); }
+			.listing-meta-item { display: flex; align-items: flex-start; gap: 0.5rem; }
+			.listing-meta-icon { flex-shrink: 0; width: 16px; text-align: center; font-size: 0.85rem; }
+			.listing-rating { text-align: right; }
+			.rating-value { font-size: 1.6rem; font-weight: 800; color: var(--accent); line-height: 1; }
+			.rating-stars { font-size: 0.85rem; color: #f5a623; margin-top: 0.15rem; }
+			.rating-count { font-size: 0.75rem; color: rgb(var(--gray)); margin-top: 0.15rem; }
+			.listing-links { display: flex; gap: 0.8rem; margin-top: 0.6rem; flex-wrap: wrap; }
+			.listing-link { font-size: 0.8rem; font-weight: 600; text-decoration: none; padding: 0.3rem 0.7rem; border-radius: 50px; transition: all 0.15s; }
+			.link-details { background: var(--accent); color: white; }
+			.link-details:hover { background: var(--accent-dark); color: white; }
+			.link-maps { background: rgba(200,57,92,0.08); color: var(--accent); }
+			.link-maps:hover { background: rgba(200,57,92,0.15); color: var(--accent); }
+			.link-web { background: rgba(201,149,110,0.12); color: var(--gold); }
+			.link-web:hover { background: rgba(201,149,110,0.22); color: var(--gold); }
+			.verified { display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.72rem; color: #2d8a4e; font-weight: 600; }
+
+			/* ── LAYOUT ── */
+			.layout { display: grid; grid-template-columns: 1fr 280px; gap: 2rem; align-items: start; }
+			.sidebar { position: sticky; top: 80px; }
+			.sidebar-card {
+				background: white; border-radius: 14px; padding: 1.4rem;
+				border: 1px solid rgba(200,57,92,0.1); margin-bottom: 1rem;
+			}
+			.sidebar-card h3 { font-size: 0.88rem; color: rgb(var(--black)); margin: 0 0 0.8rem; font-weight: 700; }
+			.sidebar-link {
+				display: block; font-size: 0.85rem; color: rgb(var(--gray-dark));
+				text-decoration: none; padding: 0.35rem 0;
+				border-bottom: 1px solid rgba(200,57,92,0.06); transition: color 0.15s;
+			}
+			.sidebar-link:hover { color: var(--accent); }
+			.sidebar-count {
+				float: right; font-size: 0.75rem; color: rgb(var(--gray));
+				background: rgba(200,57,92,0.06); padding: 0.1rem 0.5rem; border-radius: 50px;
+			}
+
+			/* ── NEGOCIO DETAIL ── */
+			.negocio-layout { display: grid; grid-template-columns: 1fr 340px; gap: 2rem; padding-bottom: 4rem; align-items: start; }
+			.main-card { background: white; border-radius: 18px; overflow: hidden; border: 1px solid rgba(200,57,92,0.1); box-shadow: 0 4px 20px rgba(200,57,92,0.06); }
+			.main-header { background: linear-gradient(135deg, #fff0f5, #fce8ef); padding: 2rem 2rem 1.5rem; }
+			.main-header-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; margin-bottom: 0.8rem; }
+			.cat-badge { display: inline-block; background: var(--accent); color: white; font-size: 0.72rem; font-weight: 700; padding: 0.2rem 0.7rem; border-radius: 50px; text-transform: uppercase; letter-spacing: 0.04em; }
+			.verified-badge { display: inline-flex; align-items: center; gap: 0.3rem; background: #e8f5e9; color: #2d8a4e; font-size: 0.75rem; font-weight: 700; padding: 0.2rem 0.7rem; border-radius: 50px; }
+			.main-header h1 { font-size: clamp(1.4rem, 3vw, 2rem); color: rgb(var(--black)); margin: 0 0 0.3rem; font-weight: 800; line-height: 1.2; }
+			.main-header .location { font-size: 0.9rem; color: rgb(var(--gray)); }
+			.rating-big { display: flex; align-items: center; gap: 0.8rem; background: white; padding: 0.8rem 1.2rem; border-radius: 12px; margin-top: 1rem; border: 1px solid rgba(200,57,92,0.1); width: fit-content; }
+			.rating-big-value { font-size: 2.2rem; font-weight: 800; color: var(--accent); line-height: 1; }
+			.rating-big-meta .stars { font-size: 1rem; color: #f5a623; }
+			.rating-big-meta .count { font-size: 0.8rem; color: rgb(var(--gray)); display: block; }
+			.rating-bars { display: flex; flex-direction: column; gap: 0.25rem; margin-top: 0.8rem; }
+			.rating-bar-row { display: flex; align-items: center; gap: 0.5rem; font-size: 0.78rem; color: rgb(var(--gray)); }
+			.rating-bar-row span:first-child { width: 12px; text-align: right; }
+			.rating-bar { flex: 1; height: 6px; background: rgba(200,57,92,0.08); border-radius: 3px; overflow: hidden; }
+			.rating-bar-fill { height: 100%; background: var(--accent); border-radius: 3px; }
+			.rating-bar-count { width: 20px; text-align: right; }
+			.main-body { padding: 2rem; }
+			.info-section { margin-bottom: 2rem; }
+			.info-section h2 { font-size: 1.05rem; color: rgb(var(--black)); margin-bottom: 0.8rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; }
+			.info-section p { font-size: 0.9rem; color: rgb(var(--gray-dark)); line-height: 1.7; margin: 0; white-space: pre-line; }
+			.info-grid { display: grid; gap: 0.6rem; }
+			.info-row { display: flex; align-items: flex-start; gap: 0.8rem; font-size: 0.9rem; padding: 0.5rem 0; border-bottom: 1px solid rgba(200,57,92,0.06); }
+			.info-icon { width: 20px; text-align: center; flex-shrink: 0; color: var(--accent); }
+			.info-label { font-weight: 600; color: rgb(var(--black)); min-width: 80px; }
+			.info-value { color: rgb(var(--gray-dark)); }
+			.info-value a { color: var(--accent); text-decoration: none; }
+			.info-value a:hover { text-decoration: underline; }
+			.hours-grid { display: grid; gap: 0.3rem; }
+			.hour-row { display: flex; justify-content: space-between; font-size: 0.88rem; padding: 0.4rem 0; border-bottom: 1px solid rgba(200,57,92,0.05); }
+			.hour-day { font-weight: 600; color: rgb(var(--black)); }
+			.hour-time { color: rgb(var(--gray)); }
+			.hour-closed { color: rgb(var(--gray)); font-style: italic; }
+			.tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+			.tag { display: inline-block; font-size: 0.78rem; background: rgba(200,57,92,0.06); color: rgb(var(--gray-dark)); padding: 0.25rem 0.65rem; border-radius: 50px; }
+			.actions { display: flex; flex-direction: column; gap: 0.7rem; }
+			.action-btn { display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.75rem; border-radius: 10px; font-weight: 700; font-size: 0.88rem; text-decoration: none; transition: all 0.2s; text-align: center; }
+			.action-primary { background: var(--accent); color: white; }
+			.action-primary:hover { background: var(--accent-dark); color: white; }
+			.action-secondary { background: rgba(200,57,92,0.08); color: var(--accent); }
+			.action-secondary:hover { background: rgba(200,57,92,0.15); color: var(--accent); }
+			.otros-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
+			.otro-card { background: white; border-radius: 12px; padding: 1rem; border: 1px solid rgba(200,57,92,0.08); text-decoration: none; color: inherit; transition: all 0.2s; }
+			.otro-card:hover { box-shadow: 0 4px 16px rgba(200,57,92,0.1); border-color: rgba(200,57,92,0.2); }
+			.otro-card h4 { font-size: 0.85rem; color: rgb(var(--black)); margin: 0 0 0.25rem; font-weight: 600; line-height: 1.3; }
+			.otro-card .otro-rating { font-size: 0.78rem; color: rgb(var(--gray)); }
+			.otro-card .otro-rating strong { color: var(--accent); }
+
+			@media (max-width: 900px) {
+				.layout { grid-template-columns: 1fr; }
+				.negocio-layout { grid-template-columns: 1fr; }
+				.sidebar { position: static; }
+			}
+			@media (max-width: 540px) {
+				.listing-card { grid-template-columns: 1fr; }
+				.listing-rating { text-align: left; display: flex; gap: 0.5rem; align-items: center; }
+				.otros-grid { grid-template-columns: 1fr; }
+				.main-header { padding: 1.5rem; }
+				.main-body { padding: 1.5rem; }
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+
+		{type === 'subcity' ? (
+			<!-- ════════════ SUBCITY LISTING PAGE ════════════ -->
+			<Fragment>
+				<div class="container">
+					<nav class="breadcrumb">
+						<a href="/">Inicio</a>
+						<span>/</span>
+						<a href="/#directorio">Directorio</a>
+						<span>/</span>
+						<a href={`/directorio/${provincia}/`}>{prov.nombre}</a>
+						<span>/</span>
+						{subcityNombre}
+					</nav>
+				</div>
+
+				<section class="page-header">
+					<div class="page-header-inner">
+						<h1>Salones de uñas en <em>{subcityNombre}</em></h1>
+						<p>Encuentra tu salón de uñas ideal en {subcityNombre}, provincia de {prov.nombre}. Todos los centros con valoraciones reales.</p>
+						<div class="header-stats">
+							<div class="header-stat">
+								<strong>{subcityNegocios.length}</strong> salones encontrados
+							</div>
+							<div class="header-stat">
+								<strong>{subcityNegocios.filter(n => n.verificado).length}</strong> verificados
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<section class="listings-section">
+					<div class="container">
+						<div class="layout">
+							<div class="listings-grid">
+								{subcityNegocios.map((n) => {
+									const nSlug = slugify(n.nombre);
+									if (!nSlug) return null;
+									return (
+										<div class="listing-card">
+											<div>
+												<span class="listing-cat">{formatCategoria(n.categoria)}</span>
+												{n.verificado && <span class="verified">&#10003; Verificado</span>}
+												<h2 class="listing-name">
+													<a href={`/directorio/${provincia}/${slug}/${nSlug}/`}>{n.nombre}</a>
+												</h2>
+												<div class="listing-meta">
+													<div class="listing-meta-item">
+														<span class="listing-meta-icon">&#128205;</span>
+														<span>{n.direccion}</span>
+													</div>
+													{n.telefono && (
+														<div class="listing-meta-item">
+															<span class="listing-meta-icon">&#128222;</span>
+															<span>{n.telefono}</span>
+														</div>
+													)}
+												</div>
+												<div class="listing-links">
+													<a href={`/directorio/${provincia}/${slug}/${nSlug}/`} class="listing-link link-details">Ver ficha</a>
+													{n.google_maps_url && (
+														<a href={n.google_maps_url} class="listing-link link-maps" target="_blank" rel="nofollow noopener">Google Maps</a>
+													)}
+													{n.web && n.dominio !== 'wa.me' && n.dominio !== 'instagram.com' && n.dominio !== 'www.instagram.com' && (
+														<a href={n.web} class="listing-link link-web" target="_blank" rel="nofollow noopener">Web</a>
+													)}
+												</div>
+											</div>
+											{n.rating && (
+												<div class="listing-rating">
+													<div class="rating-value">{n.rating}</div>
+													<div class="rating-stars">{renderEstrellas(n.rating)}</div>
+													<div class="rating-count">{n.num_resenas} reseñas</div>
+												</div>
+											)}
+										</div>
+									);
+								})}
+							</div>
+
+							<aside class="sidebar">
+								<div class="sidebar-card">
+									<h3>Volver a {prov.nombre}</h3>
+									<a href={`/directorio/${provincia}/`} class="sidebar-link">
+										Ver todos en {prov.capital}
+										<span class="sidebar-count">{getCapitalNegocios(provincia!).length}</span>
+									</a>
+								</div>
+								<div class="sidebar-card">
+									<h3>Otras localidades</h3>
+									{getSubcities(provincia!).filter(sc => sc.slug !== slug).slice(0, 10).map((sc) => (
+										<a href={`/directorio/${provincia}/${sc.slug}/`} class="sidebar-link">
+											{sc.nombre}
+											<span class="sidebar-count">{sc.count}</span>
+										</a>
+									))}
+								</div>
+							</aside>
+						</div>
+					</div>
+				</section>
+			</Fragment>
+		) : negocio ? (
+			<!-- ════════════ CAPITAL BUSINESS DETAIL PAGE ════════════ -->
+			<Fragment>
+				<div class="container">
+					<nav class="breadcrumb">
+						<a href="/">Inicio</a>
+						<span>/</span>
+						<a href="/#directorio">Directorio</a>
+						<span>/</span>
+						<a href={`/directorio/${provincia}/`}>{prov.nombre}</a>
+						<span>/</span>
+						{negocio.nombre}
+					</nav>
+				</div>
+
+				<div class="container">
+					<div class="negocio-layout">
+						<div class="main-card">
+							<div class="main-header">
+								<div class="main-header-top">
+									<span class="cat-badge">{formatCategoria(negocio.categoria)}</span>
+									{negocio.verificado && <span class="verified-badge">&#10003; Verificado</span>}
+								</div>
+								<h1>{negocio.nombre}</h1>
+								<p class="location">{negocio.direccion}</p>
+
+								{negocio.rating && (
+									<div class="rating-big">
+										<div class="rating-big-value">{negocio.rating}</div>
+										<div class="rating-big-meta">
+											<span class="stars">{renderEstrellas(negocio.rating)}</span>
+											<span class="count">{negocio.num_resenas} reseñas en Google</span>
+										</div>
+									</div>
+								)}
+
+								{negocio.rating_distribucion && Object.keys(negocio.rating_distribucion).length > 0 && (
+									<div class="rating-bars">
+										{[5, 4, 3, 2, 1].map((star) => {
+											const count = negocio.rating_distribucion[String(star)] || 0;
+											const pct = negocio.num_resenas > 0 ? (count / negocio.num_resenas) * 100 : 0;
+											return (
+												<div class="rating-bar-row">
+													<span>{star}</span>
+													<div class="rating-bar">
+														<div class="rating-bar-fill" style={`width:${pct}%`}></div>
+													</div>
+													<span class="rating-bar-count">{count}</span>
+												</div>
+											);
+										})}
+									</div>
+								)}
+							</div>
+
+							<div class="main-body">
+								{negocio.descripcion && (
+									<div class="info-section">
+										<h2>Sobre este salón</h2>
+										<p>{negocio.descripcion}</p>
+									</div>
+								)}
+
+								<div class="info-section">
+									<h2>Información de contacto</h2>
+									<div class="info-grid">
+										<div class="info-row">
+											<span class="info-icon">&#128205;</span>
+											<span class="info-label">Dirección</span>
+											<span class="info-value">{negocio.direccion}</span>
+										</div>
+										{negocio.telefono && (
+											<div class="info-row">
+												<span class="info-icon">&#128222;</span>
+												<span class="info-label">Teléfono</span>
+												<span class="info-value">
+													<a href={`tel:${negocio.telefono}`}>{negocio.telefono}</a>
+												</span>
+											</div>
+										)}
+										{negocio.web && (
+											<div class="info-row">
+												<span class="info-icon">&#127760;</span>
+												<span class="info-label">Web</span>
+												<span class="info-value">
+													<a href={negocio.web} target="_blank" rel="nofollow noopener">{negocio.dominio}</a>
+												</span>
+											</div>
+										)}
+										{negocio.barrio && (
+											<div class="info-row">
+												<span class="info-icon">&#127968;</span>
+												<span class="info-label">Barrio</span>
+												<span class="info-value">{negocio.barrio}</span>
+											</div>
+										)}
+										{negocio.codigo_postal && (
+											<div class="info-row">
+												<span class="info-icon">&#128233;</span>
+												<span class="info-label">C.P.</span>
+												<span class="info-value">{negocio.codigo_postal}</span>
+											</div>
+										)}
+									</div>
+								</div>
+
+								{negocio.horarios && Object.keys(negocio.horarios).length > 0 && (
+									<div class="info-section">
+										<h2>Horarios</h2>
+										<div class="hours-grid">
+											{Object.entries(diasSemana).map(([key, label]) => {
+												const slots = negocio.horarios?.[key];
+												return (
+													<div class="hour-row">
+														<span class="hour-day">{label}</span>
+														{slots ? (
+															<span class="hour-time">
+																{slots.map((s: any) =>
+																	`${String(s.open.hour).padStart(2, '0')}:00 - ${String(s.close.hour).padStart(2, '0')}:00`
+																).join(' / ')}
+															</span>
+														) : (
+															<span class="hour-closed">Cerrado</span>
+														)}
+													</div>
+												);
+											})}
+										</div>
+									</div>
+								)}
+
+								{attrList.length > 0 && (
+									<div class="info-section">
+										<h2>Servicios y características</h2>
+										<div class="tags">
+											{attrList.map((a) => (
+												<span class="tag">{a.label}</span>
+											))}
+										</div>
+									</div>
+								)}
+							</div>
+						</div>
+
+						<aside class="sidebar">
+							<div class="sidebar-card">
+								<h3>Contactar</h3>
+								<div class="actions">
+									{negocio.telefono && (
+										<a href={`tel:${negocio.telefono}`} class="action-btn action-primary">Llamar ahora</a>
+									)}
+									{negocio.google_maps_url && (
+										<a href={negocio.google_maps_url} class="action-btn action-secondary" target="_blank" rel="nofollow noopener">Ver en Google Maps</a>
+									)}
+									{negocio.web && (
+										<a href={negocio.web} class="action-btn action-secondary" target="_blank" rel="nofollow noopener">Visitar web</a>
+									)}
+								</div>
+							</div>
+
+							{otrosNegocios.length > 0 && (
+								<div class="sidebar-card">
+									<h3>Otros salones en {prov.capital}</h3>
+									{otrosNegocios.map((n) => (
+										<a href={`/directorio/${provincia}/${slugify(n.nombre)}/`} style="display:block;font-size:0.85rem;color:rgb(var(--gray-dark));text-decoration:none;padding:0.4rem 0;border-bottom:1px solid rgba(200,57,92,0.06);transition:color 0.15s;">
+											{n.nombre}
+											{n.rating && <span style="float:right;color:var(--accent);font-size:0.8rem;font-weight:700;">{n.rating}</span>}
+										</a>
+									))}
+								</div>
+							)}
+
+							<div class="sidebar-card">
+								<h3>Guías relacionadas</h3>
+								<a href="/blog/precio-manicura-espana" class="sidebar-link">Precios de manicura en España</a>
+								<a href="/blog/unas-de-gel-guia-completa" class="sidebar-link">Uñas de gel: guía completa</a>
+								<a href="/blog/manicura-semipermanente" class="sidebar-link">Manicura semipermanente</a>
+							</div>
+						</aside>
+					</div>
+				</div>
+
+				{otrosNegocios.length > 0 && (
+					<section style="padding:2rem 0 4rem;background:#fdf5f7;">
+						<div class="container">
+							<h2 style="font-size:1.3rem;color:rgb(var(--black));margin-bottom:1.2rem;">Más salones de uñas en {prov.capital}</h2>
+							<div class="otros-grid">
+								{otrosNegocios.map((n) => (
+									<a href={`/directorio/${provincia}/${slugify(n.nombre)}/`} class="otro-card">
+										<h4>{n.nombre}</h4>
+										<p class="otro-rating">
+											{n.rating && <><strong>{n.rating}</strong> ({n.num_resenas} reseñas)</>}
+										</p>
+									</a>
+								))}
+							</div>
+						</div>
+					</section>
+				)}
+			</Fragment>
+		) : (
+			<div class="container" style="padding:4rem 0;text-align:center;">
+				<h1>Página no encontrada</h1>
+				<p>El negocio que buscas no existe.</p>
+				<a href={`/directorio/${provincia}/`} style="color:var(--accent);">Volver a {prov.nombre}</a>
+			</div>
+		)}
+
+		<Footer />
+	</body>
+</html>

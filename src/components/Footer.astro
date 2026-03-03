@@ -1,0 +1,146 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+	<div class="footer-inner">
+		<div class="footer-brand">
+			<a href="/" class="footer-logo">💅 Tendencias de Uñas</a>
+			<p>Tu guía definitiva de manicura y tendencias nail en España. Técnicas, diseños y consejos profesionales actualizados en 2026.</p>
+			</div>
+
+		<div class="footer-col">
+			<h4>Técnicas</h4>
+			<ul>
+				<li><a href="/blog/unas-de-gel-guia-completa">Uñas de Gel</a></li>
+				<li><a href="/blog/manicura-semipermanente">Semipermanente</a></li>
+				<li><a href="/blog/unas-francesas-2026">Uñas Francesas</a></li>
+				<li><a href="/blog/unas-acrilicas">Uñas Acrílicas</a></li>
+				<li><a href="/blog/manicura-rusa">Manicura Rusa</a></li>
+			</ul>
+		</div>
+
+		<div class="footer-col">
+			<h4>Tendencias 2026</h4>
+			<ul>
+				<li><a href="/blog/tendencias-unas-primavera-2026">Primavera 2026</a></li>
+				<li><a href="/blog/unas-verano-2026">Verano 2026</a></li>
+				<li><a href="/blog/unas-otono-2026">Otoño 2026</a></li>
+				<li><a href="/blog/unas-francesas-2026">Uñas Francesas</a></li>
+				<li><a href="/blog/unas-cortas-disenos">Uñas Cortas</a></li>
+			</ul>
+		</div>
+
+		<div class="footer-col">
+			<h4>Información</h4>
+			<ul>
+				<li><a href="/about">Sobre nosotras</a></li>
+				<li><a href="/blog">Todos los artículos</a></li>
+				<li><a href="/tecnicas">Guía de Técnicas</a></li>
+				<li><a href="/tendencias">Tendencias</a></li>
+				<li><a href="/rss.xml">RSS Feed</a></li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="footer-bottom">
+		<p>© {year} Tendencias de Uñas · Todos los derechos reservados</p>
+		<p class="footer-tagline">Guías de manicura y nail art para el mercado español</p>
+	</div>
+</footer>
+
+<style>
+	.site-footer {
+		background: rgb(var(--black));
+		color: rgba(255,255,255,0.7);
+		margin-top: auto;
+	}
+	.footer-inner {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 3.5rem 1.5rem 2rem;
+		display: grid;
+		grid-template-columns: 2fr 1fr 1fr 1fr;
+		gap: 3rem;
+	}
+	.footer-logo {
+		display: inline-block;
+		font-size: 1.1rem;
+		font-weight: 700;
+		color: white;
+		text-decoration: none;
+		margin-bottom: 0.9rem;
+	}
+	.footer-brand p {
+		font-size: 0.85rem;
+		line-height: 1.7;
+		color: rgba(255,255,255,0.55);
+		max-width: 280px;
+		margin-bottom: 1.2rem;
+	}
+	.footer-col h4 {
+		font-size: 0.8rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		color: white;
+		margin-bottom: 1rem;
+	}
+	.footer-col ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.55rem;
+	}
+	.footer-col ul a {
+		font-size: 0.88rem;
+		color: rgba(255,255,255,0.55);
+		text-decoration: none;
+		transition: color 0.15s;
+	}
+	.footer-col ul a:hover {
+		color: var(--accent-light);
+	}
+	.footer-bottom {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 1.2rem 1.5rem;
+		border-top: 1px solid rgba(255,255,255,0.08);
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+	}
+	.footer-bottom p {
+		font-size: 0.8rem;
+		color: rgba(255,255,255,0.35);
+		margin: 0;
+	}
+	.footer-tagline {
+		font-style: italic;
+	}
+	@media (max-width: 900px) {
+		.footer-inner {
+			grid-template-columns: 1fr 1fr;
+			gap: 2rem;
+		}
+		.footer-brand {
+			grid-column: 1 / -1;
+		}
+		.footer-brand p {
+			max-width: 100%;
+		}
+	}
+	@media (max-width: 540px) {
+		.footer-inner {
+			grid-template-columns: 1fr;
+		}
+		.footer-bottom {
+			flex-direction: column;
+			text-align: center;
+		}
+	}
+</style>

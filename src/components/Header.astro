@@ -1,0 +1,137 @@
+---
+import { SITE_TITLE } from '../consts';
+import HeaderLink from './HeaderLink.astro';
+---
+
+<header>
+	<nav>
+		<a href="/" class="site-logo">
+			<span class="logo-nail">💅</span>
+			<span class="logo-text">{SITE_TITLE}</span>
+		</a>
+		<button class="menu-toggle" id="menuToggle" aria-label="Abrir menú" aria-expanded="false">
+			<span></span><span></span><span></span>
+		</button>
+		<div class="nav-links" id="navLinks">
+			<HeaderLink href="/">Directorio</HeaderLink>
+			<HeaderLink href="/tecnicas">Técnicas</HeaderLink>
+			<HeaderLink href="/tendencias">Tendencias</HeaderLink>
+			<HeaderLink href="/blog">Blog</HeaderLink>
+			<HeaderLink href="/about">Sobre nosotras</HeaderLink>
+		</div>
+	</nav>
+</header>
+
+<script>
+	const toggle = document.getElementById('menuToggle');
+	const nav = document.getElementById('navLinks');
+	toggle?.addEventListener('click', () => {
+		const open = nav?.classList.toggle('open');
+		toggle.setAttribute('aria-expanded', String(open));
+	});
+</script>
+
+<style>
+	header {
+		position: sticky;
+		top: 0;
+		z-index: 100;
+		background: rgba(255, 255, 255, 0.95);
+		backdrop-filter: blur(8px);
+		border-bottom: 1px solid rgba(200, 57, 92, 0.1);
+		box-shadow: 0 1px 12px rgba(200, 57, 92, 0.06);
+	}
+	nav {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 0 1.5rem;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		height: 64px;
+	}
+	.site-logo {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		text-decoration: none;
+		color: rgb(var(--black));
+	}
+	.logo-nail {
+		font-size: 1.4rem;
+		line-height: 1;
+	}
+	.logo-text {
+		font-weight: 700;
+		font-size: 1rem;
+		letter-spacing: -0.01em;
+	}
+	.nav-links {
+		display: flex;
+		align-items: center;
+		gap: 0.25rem;
+	}
+	.nav-links :global(a) {
+		padding: 0.45rem 0.8rem;
+		border-radius: 8px;
+		color: rgb(var(--gray-dark));
+		text-decoration: none;
+		font-size: 0.9rem;
+		font-weight: 500;
+		transition: background 0.15s, color 0.15s;
+		border-bottom: none;
+	}
+	.nav-links :global(a:hover) {
+		background: var(--accent-light);
+		color: var(--accent);
+	}
+	.nav-links :global(a.active) {
+		color: var(--accent);
+		background: var(--accent-light);
+		font-weight: 700;
+	}
+	.menu-toggle {
+		display: none;
+		flex-direction: column;
+		justify-content: center;
+		gap: 5px;
+		background: none;
+		border: none;
+		cursor: pointer;
+		padding: 0.4rem;
+		border-radius: 8px;
+	}
+	.menu-toggle span {
+		display: block;
+		width: 22px;
+		height: 2px;
+		background: rgb(var(--black));
+		border-radius: 2px;
+		transition: all 0.2s;
+	}
+	@media (max-width: 768px) {
+		.menu-toggle {
+			display: flex;
+		}
+		.nav-links {
+			display: none;
+			position: absolute;
+			top: 64px;
+			left: 0;
+			right: 0;
+			background: white;
+			flex-direction: column;
+			align-items: stretch;
+			padding: 0.75rem 1rem 1rem;
+			border-bottom: 1px solid rgba(200, 57, 92, 0.1);
+			box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+			gap: 0.2rem;
+		}
+		.nav-links.open {
+			display: flex;
+		}
+		.nav-links :global(a) {
+			padding: 0.65rem 0.8rem;
+		}
+	}
+</style>

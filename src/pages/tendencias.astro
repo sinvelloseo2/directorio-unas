@@ -1,0 +1,325 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import FormattedDate from '../components/FormattedDate.astro';
+
+const title = 'Tendencias de Uñas 2026: Todos los Diseños que Arrasan';
+const description = 'Las tendencias de uñas 2026 por temporada: colores, diseños de nail art, formas y estilos que triunfan en primavera, verano, otoño e invierno.';
+
+const allPosts = await getCollection('blog');
+
+const seasons = [
+	{
+		name: 'Primavera 2026',
+		emoji: '🌸',
+		colors: ['Lavanda', 'Verde Menta', 'Baby Blue', 'Coral Suave', 'Butter White'],
+		colorDots: ['#c5b4d9', '#a8d8c2', '#a8c8e8', '#f59070', '#f5e8c8'],
+		designs: ['Nail art floral', 'Efecto acuarela', 'Lunares pastel', 'Líneas geométricas', 'Efecto jelly'],
+		href: '/blog/tendencias-unas-primavera-2026',
+		bg: 'linear-gradient(135deg, #fce8ef, #f0e8fc)',
+	},
+	{
+		name: 'Verano 2026',
+		emoji: '☀️',
+		colors: ['Coral Vibrante', 'Amarillo Sol', 'Turquesa', 'Naranja Neon', 'Blanco Óptico'],
+		colorDots: ['#ff6b6b', '#ffd93d', '#4ecdc4', '#ff6348', '#ffffff'],
+		designs: ['Tie-dye nails', 'Efecto helado', 'Tropical prints', 'Chrome dorado', 'Ombre sunset'],
+		href: '/blog/unas-verano-2026',
+		bg: 'linear-gradient(135deg, #fff3cd, #ffd8a8)',
+	},
+	{
+		name: 'Otoño 2026',
+		emoji: '🍂',
+		colors: ['Terracota', 'Burdeos', 'Marrón Tostado', 'Khaki', 'Naranja Óxido'],
+		colorDots: ['#c1440e', '#800020', '#7b4a2d', '#8a9264', '#c46200'],
+		designs: ['Efecto mármol', 'Tortoiseshell', 'Hojas otoñales', 'Nude oscuro', 'Dorados'],
+		href: '/blog/unas-otono-2026',
+		bg: 'linear-gradient(135deg, #fce0c8, #f0d8a8)',
+	},
+	{
+		name: 'Navidad & Invierno',
+		emoji: '❄️',
+		colors: ['Rojo Clásico', 'Verde Botella', 'Nude Perlado', 'Burdeos Intenso', 'Plateado Hielo'],
+		colorDots: ['#c0392b', '#1e6b3c', '#e8ddd0', '#6b0020', '#c8d8e8'],
+		designs: ['Glitter fino', 'Efecto nevado', 'Rayas festivas', 'Puntos plateados', 'Chrome espejo'],
+		href: '/blog/unas-francesas-2026',
+		bg: 'linear-gradient(135deg, #e8f0fc, #d8e8fc)',
+	},
+];
+
+const trendPosts = allPosts
+	.filter(p => p.id.includes('tendencias') || p.id.includes('verano') || p.id.includes('otono') || p.id.includes('francesas') || p.id.includes('navidad') || p.id.includes('primavera'))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const allTrendPosts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()).slice(0, 6);
+---
+
+<!doctype html>
+<html lang="es">
+	<head>
+		<BaseHead title={title} description={description} />
+		<style>
+			.page-hero {
+				background: linear-gradient(135deg, #c8395c 0%, #d9547a 50%, #c9956e 100%);
+				padding: 4rem 1.5rem 3rem;
+				text-align: center;
+				color: white;
+			}
+			.page-hero h1 {
+				font-size: clamp(1.8rem, 4vw, 2.8rem);
+				color: white;
+				margin-bottom: 0.75rem;
+			}
+			.page-hero p {
+				font-size: 1rem;
+				opacity: 0.88;
+				max-width: 600px;
+				margin: 0 auto;
+				line-height: 1.7;
+			}
+			.container {
+				max-width: 1200px;
+				margin: 0 auto;
+				padding: 0 1.5rem;
+			}
+			.section { padding: 4rem 0; }
+			.section-alt { background: #fdf5f7; }
+			.section-title {
+				font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+				color: rgb(var(--black));
+				margin-bottom: 0.5rem;
+				text-align: center;
+			}
+			.section-subtitle {
+				text-align: center;
+				color: rgb(var(--gray));
+				font-size: 0.92rem;
+				margin-bottom: 2.5rem;
+				line-height: 1.6;
+			}
+
+			/* SEASON CARDS */
+			.seasons-grid {
+				display: grid;
+				grid-template-columns: repeat(2, 1fr);
+				gap: 1.5rem;
+			}
+			.season-card {
+				border-radius: 20px;
+				overflow: hidden;
+				border: 1px solid rgba(200,57,92,0.1);
+				background: white;
+				transition: all 0.25s;
+			}
+			.season-card:hover {
+				transform: translateY(-4px);
+				box-shadow: 0 16px 40px rgba(200,57,92,0.12);
+			}
+			.season-header {
+				padding: 2rem;
+				display: flex;
+				align-items: center;
+				gap: 1rem;
+			}
+			.season-emoji { font-size: 2.5rem; line-height: 1; }
+			.season-header h2 {
+				font-size: 1.3rem;
+				color: rgb(var(--black));
+				margin: 0;
+			}
+			.season-body { padding: 0 2rem 2rem; }
+			.season-section-title {
+				font-size: 0.72rem;
+				font-weight: 700;
+				text-transform: uppercase;
+				letter-spacing: 0.1em;
+				color: var(--accent);
+				margin-bottom: 0.7rem;
+			}
+			.color-swatches {
+				display: flex;
+				gap: 0.7rem;
+				flex-wrap: wrap;
+				margin-bottom: 1.3rem;
+			}
+			.color-item {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 0.3rem;
+			}
+			.color-circle {
+				width: 32px;
+				height: 32px;
+				border-radius: 50%;
+				border: 2px solid rgba(0,0,0,0.08);
+				box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+			}
+			.color-name {
+				font-size: 0.65rem;
+				color: rgb(var(--gray));
+				text-align: center;
+				max-width: 45px;
+				line-height: 1.2;
+			}
+			.designs-list {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.4rem;
+				margin-bottom: 1.5rem;
+			}
+			.design-tag {
+				background: rgba(200,57,92,0.08);
+				color: var(--accent);
+				padding: 0.25rem 0.7rem;
+				border-radius: 50px;
+				font-size: 0.78rem;
+				font-weight: 500;
+			}
+			.season-link {
+				display: inline-flex;
+				align-items: center;
+				gap: 0.4rem;
+				color: var(--accent);
+				font-weight: 700;
+				text-decoration: none;
+				font-size: 0.87rem;
+				transition: gap 0.2s;
+			}
+			.season-link:hover { gap: 0.7rem; color: var(--accent); }
+
+			/* ARTICLES GRID */
+			.articles-grid {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 1.25rem;
+			}
+			.article-card {
+				background: white;
+				border-radius: 16px;
+				overflow: hidden;
+				border: 1px solid rgba(200,57,92,0.08);
+				transition: all 0.25s;
+				text-decoration: none;
+				color: inherit;
+				display: flex;
+				flex-direction: column;
+			}
+			.article-card:hover {
+				transform: translateY(-4px);
+				box-shadow: 0 12px 32px rgba(200,57,92,0.1);
+			}
+			.article-card :global(img) {
+				width: 100%;
+				height: 170px;
+				object-fit: cover;
+				border-radius: 0;
+				display: block;
+			}
+			.article-placeholder {
+				width: 100%;
+				height: 170px;
+				background: linear-gradient(135deg, #fce8ef, #f0e8fc);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 2.5rem;
+			}
+			.article-body {
+				padding: 1.1rem;
+				flex: 1;
+				display: flex;
+				flex-direction: column;
+			}
+			.article-body h3 {
+				font-size: 0.93rem;
+				color: rgb(var(--black));
+				margin: 0 0 0.5rem;
+				line-height: 1.4;
+				font-weight: 600;
+			}
+			.article-date {
+				font-size: 0.78rem;
+				color: rgb(var(--gray));
+				margin-top: auto;
+			}
+
+			@media (max-width: 768px) {
+				.seasons-grid { grid-template-columns: 1fr; }
+				.articles-grid { grid-template-columns: repeat(2, 1fr); }
+			}
+			@media (max-width: 540px) {
+				.articles-grid { grid-template-columns: 1fr; }
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+
+		<div class="page-hero">
+			<h1>Tendencias de Uñas 2026</h1>
+			<p>Los colores, diseños y nail art que triunfan en cada temporada. Mantente siempre al día con los estilos más buscados en España.</p>
+		</div>
+
+		<section class="section">
+			<div class="container">
+				<h2 class="section-title">Tendencias por temporada</h2>
+				<p class="section-subtitle">Elige la paleta perfecta para cada época del año</p>
+				<div class="seasons-grid">
+					{seasons.map((season) => (
+						<div class="season-card">
+							<div class="season-header" style={{ background: season.bg }}>
+								<span class="season-emoji">{season.emoji}</span>
+								<h2>{season.name}</h2>
+							</div>
+							<div class="season-body">
+								<p class="season-section-title">Colores protagonistas</p>
+								<div class="color-swatches">
+									{season.colors.map((color, i) => (
+										<div class="color-item">
+											<div class="color-circle" style={{ backgroundColor: season.colorDots[i] }}></div>
+											<span class="color-name">{color}</span>
+										</div>
+									))}
+								</div>
+								<p class="season-section-title">Estilos de nail art</p>
+								<div class="designs-list">
+									{season.designs.map(d => (
+										<span class="design-tag">{d}</span>
+									))}
+								</div>
+								<a href={season.href} class="season-link">Ver tendencias completas →</a>
+							</div>
+						</div>
+					))}
+				</div>
+			</div>
+		</section>
+
+		<section class="section section-alt">
+			<div class="container">
+				<h2 class="section-title">Últimos artículos de tendencias</h2>
+				<p class="section-subtitle">Inspiración actualizada para tu próxima manicura</p>
+				<div class="articles-grid">
+					{allTrendPosts.map((post) => (
+						<a href={`/blog/${post.id}/`} class="article-card">
+							{post.data.heroImage
+								? <Image width={400} height={200} src={post.data.heroImage} alt={post.data.title} />
+								: <div class="article-placeholder">💅</div>
+							}
+							<div class="article-body">
+								<h3>{post.data.title}</h3>
+								<span class="article-date"><FormattedDate date={post.data.pubDate} /></span>
+							</div>
+						</a>
+					))}
+				</div>
+			</div>
+		</section>
+
+		<Footer />
+	</body>
+</html>

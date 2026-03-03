@@ -1,0 +1,397 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { SITE_TITLE } from '../../consts';
+import { getProvincias, getProvincia, getCapitalNegocios, getSubcities, slugify, formatCategoria, renderEstrellas } from '../../data/directorio';
+
+export function getStaticPaths() {
+	const provincias = getProvincias();
+	return provincias.map((p) => ({ params: { provincia: p.slug } }));
+}
+
+const { provincia } = Astro.params;
+const prov = getProvincia(provincia!);
+
+if (!prov) {
+	return Astro.redirect('/404');
+}
+
+const capitalNegocios = getCapitalNegocios(provincia!);
+const subcities = getSubcities(provincia!);
+const allProvincias = getProvincias();
+---
+
+<!doctype html>
+<html lang="es">
+	<head>
+		<BaseHead
+			title={`Salones de Uñas en ${prov.nombre} - ${prov.total} centros | ${SITE_TITLE}`}
+			description={`Los ${prov.total} mejores salones de uñas y manicura en ${prov.nombre}. ${capitalNegocios.length} en ${prov.capital} + ${subcities.length} localidades. Direcciones, teléfonos y valoraciones.`}
+		/>
+
+		<script type="application/ld+json" set:html={JSON.stringify({
+			"@context": "https://schema.org",
+			"@type": "ItemList",
+			"name": `Salones de uñas en ${prov.nombre}`,
+			"description": `Directorio de salones de uñas en la provincia de ${prov.nombre}`,
+			"numberOfItems": prov.total,
+			"itemListElement": capitalNegocios.slice(0, 20).map((n, i) => ({
+				"@type": "ListItem",
+				"position": i + 1,
+				"item": {
+					"@type": "NailSalon",
+					"name": n.nombre,
+					"address": n.direccion,
+					...(n.telefono ? { "telephone": n.telefono } : {}),
+					...(n.rating ? { "aggregateRating": { "@type": "AggregateRating", "ratingValue": n.rating, "reviewCount": n.num_resenas } } : {}),
+				}
+			}))
+		})} />
+
+		<style>
+			.container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+
+			.breadcrumb { padding: 1rem 0; font-size: 0.82rem; color: rgb(var(--gray)); }
+			.breadcrumb a { color: var(--accent); text-decoration: none; }
+			.breadcrumb a:hover { text-decoration: underline; }
+			.breadcrumb span { margin: 0 0.4rem; }
+
+			.page-header {
+				background: linear-gradient(135deg, #fff0f5 0%, #fce8ef 45%, #fffafc 100%);
+				padding: 3rem 1.5rem 2.5rem;
+			}
+			.page-header-inner { max-width: 1200px; margin: 0 auto; }
+			.page-header h1 {
+				font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+				color: rgb(var(--black));
+				margin-bottom: 0.5rem;
+				font-weight: 800;
+			}
+			.page-header h1 em { font-style: normal; color: var(--accent); }
+			.page-header p {
+				color: rgb(var(--gray));
+				font-size: 1rem;
+				max-width: 600px;
+				line-height: 1.6;
+				margin: 0;
+			}
+			.header-stats {
+				display: flex;
+				gap: 2rem;
+				margin-top: 1.5rem;
+			}
+			.header-stat {
+				display: flex;
+				align-items: center;
+				gap: 0.5rem;
+				font-size: 0.88rem;
+				color: rgb(var(--gray-dark));
+			}
+			.header-stat strong { color: var(--accent); }
+
+			/* ── SUBCITIES GRID ── */
+			.subcities-section { padding: 2.5rem 0; }
+			.subcities-section h2 {
+				font-size: 1.3rem;
+				color: rgb(var(--black));
+				margin-bottom: 1.2rem;
+				font-weight: 700;
+			}
+			.subcities-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+				gap: 0.8rem;
+				margin-bottom: 2rem;
+			}
+			.subcity-card {
+				background: white;
+				border-radius: 12px;
+				padding: 1rem 1.2rem;
+				text-decoration: none;
+				color: inherit;
+				border: 1px solid rgba(200,57,92,0.1);
+				transition: all 0.25s;
+				display: flex;
+				align-items: center;
+				gap: 0.8rem;
+			}
+			.subcity-card:hover {
+				transform: translateY(-2px);
+				box-shadow: 0 6px 20px rgba(200,57,92,0.1);
+				border-color: var(--accent);
+			}
+			.subcity-icon {
+				width: 36px; height: 36px;
+				background: var(--accent-light);
+				border-radius: 10px;
+				display: flex; align-items: center; justify-content: center;
+				font-size: 1rem;
+				flex-shrink: 0;
+			}
+			.subcity-info h3 { font-size: 0.88rem; color: rgb(var(--black)); margin: 0 0 0.1rem; font-weight: 600; }
+			.subcity-count { font-size: 0.75rem; color: rgb(var(--gray)); }
+
+			/* ── LISTINGS ── */
+			.listings-section { padding: 0 0 4rem; }
+			.listings-section h2 {
+				font-size: 1.3rem;
+				color: rgb(var(--black));
+				margin-bottom: 1.2rem;
+				font-weight: 700;
+			}
+			.listings-grid { display: grid; gap: 1rem; }
+			.listing-card {
+				background: white;
+				border-radius: 14px;
+				padding: 1.4rem 1.6rem;
+				border: 1px solid rgba(200,57,92,0.08);
+				display: grid;
+				grid-template-columns: 1fr auto;
+				gap: 1rem;
+				align-items: start;
+				transition: all 0.2s;
+			}
+			.listing-card:hover {
+				box-shadow: 0 6px 24px rgba(200,57,92,0.1);
+				border-color: rgba(200,57,92,0.2);
+			}
+			.listing-name {
+				font-size: 1.05rem;
+				font-weight: 700;
+				color: rgb(var(--black));
+				margin: 0 0 0.3rem;
+			}
+			.listing-name a { color: inherit; text-decoration: none; }
+			.listing-name a:hover { color: var(--accent); }
+			.listing-cat {
+				display: inline-block;
+				background: var(--accent-light);
+				color: var(--accent);
+				font-size: 0.72rem;
+				font-weight: 700;
+				padding: 0.15rem 0.55rem;
+				border-radius: 50px;
+				margin-bottom: 0.6rem;
+			}
+			.listing-meta {
+				display: flex;
+				flex-direction: column;
+				gap: 0.35rem;
+				font-size: 0.85rem;
+				color: rgb(var(--gray));
+			}
+			.listing-meta-item {
+				display: flex;
+				align-items: flex-start;
+				gap: 0.5rem;
+			}
+			.listing-meta-icon { flex-shrink: 0; width: 16px; text-align: center; font-size: 0.85rem; }
+			.listing-rating { text-align: right; }
+			.rating-value { font-size: 1.6rem; font-weight: 800; color: var(--accent); line-height: 1; }
+			.rating-stars { font-size: 0.85rem; color: #f5a623; margin-top: 0.15rem; }
+			.rating-count { font-size: 0.75rem; color: rgb(var(--gray)); margin-top: 0.15rem; }
+			.listing-links { display: flex; gap: 0.8rem; margin-top: 0.6rem; flex-wrap: wrap; }
+			.listing-link {
+				font-size: 0.8rem;
+				font-weight: 600;
+				text-decoration: none;
+				padding: 0.3rem 0.7rem;
+				border-radius: 50px;
+				transition: all 0.15s;
+			}
+			.link-details { background: var(--accent); color: white; }
+			.link-details:hover { background: var(--accent-dark); color: white; }
+			.link-maps { background: rgba(200,57,92,0.08); color: var(--accent); }
+			.link-maps:hover { background: rgba(200,57,92,0.15); color: var(--accent); }
+			.link-web { background: rgba(201,149,110,0.12); color: var(--gold); }
+			.link-web:hover { background: rgba(201,149,110,0.22); color: var(--gold); }
+
+			.verified {
+				display: inline-flex;
+				align-items: center;
+				gap: 0.25rem;
+				font-size: 0.72rem;
+				color: #2d8a4e;
+				font-weight: 600;
+			}
+
+			/* ── SIDEBAR ── */
+			.layout {
+				display: grid;
+				grid-template-columns: 1fr 280px;
+				gap: 2rem;
+				align-items: start;
+			}
+			.sidebar { position: sticky; top: 80px; }
+			.sidebar-card {
+				background: white;
+				border-radius: 14px;
+				padding: 1.4rem;
+				border: 1px solid rgba(200,57,92,0.1);
+				margin-bottom: 1rem;
+			}
+			.sidebar-card h3 { font-size: 0.88rem; color: rgb(var(--black)); margin: 0 0 0.8rem; font-weight: 700; }
+			.sidebar-link {
+				display: block;
+				font-size: 0.85rem;
+				color: rgb(var(--gray-dark));
+				text-decoration: none;
+				padding: 0.35rem 0;
+				border-bottom: 1px solid rgba(200,57,92,0.06);
+				transition: color 0.15s;
+			}
+			.sidebar-link:hover { color: var(--accent); }
+			.sidebar-count {
+				float: right;
+				font-size: 0.75rem;
+				color: rgb(var(--gray));
+				background: rgba(200,57,92,0.06);
+				padding: 0.1rem 0.5rem;
+				border-radius: 50px;
+			}
+
+			@media (max-width: 900px) {
+				.layout { grid-template-columns: 1fr; }
+				.sidebar { position: static; }
+			}
+			@media (max-width: 540px) {
+				.listing-card { grid-template-columns: 1fr; }
+				.listing-rating { text-align: left; display: flex; gap: 0.5rem; align-items: center; }
+				.subcities-grid { grid-template-columns: repeat(2, 1fr); }
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+
+		<div class="container">
+			<nav class="breadcrumb">
+				<a href="/">Inicio</a>
+				<span>/</span>
+				<a href="/#directorio">Directorio</a>
+				<span>/</span>
+				{prov.nombre}
+			</nav>
+		</div>
+
+		<section class="page-header">
+			<div class="page-header-inner">
+				<h1>Salones de uñas en <em>{prov.nombre}</em></h1>
+				<p>Encuentra tu salón de uñas ideal en la provincia de {prov.nombre}. {capitalNegocios.length} centros en {prov.capital}{subcities.length > 0 ? ` y ${subcities.length} localidades más` : ''}.</p>
+				<div class="header-stats">
+					<div class="header-stat">
+						<strong>{prov.total}</strong> salones en total
+					</div>
+					<div class="header-stat">
+						<strong>{capitalNegocios.length}</strong> en {prov.capital}
+					</div>
+					{subcities.length > 0 && (
+						<div class="header-stat">
+							<strong>{subcities.length}</strong> localidades
+						</div>
+					)}
+				</div>
+			</div>
+		</section>
+
+		<div class="container">
+			{subcities.length > 0 && (
+				<section class="subcities-section">
+					<h2>Localidades en {prov.nombre}</h2>
+					<div class="subcities-grid">
+						{subcities.map((sc) => (
+							<a href={`/directorio/${provincia}/${sc.slug}/`} class="subcity-card">
+								<div class="subcity-icon">📍</div>
+								<div class="subcity-info">
+									<h3>{sc.nombre}</h3>
+									<span class="subcity-count">{sc.count} {sc.count === 1 ? 'salón' : 'salones'}</span>
+								</div>
+							</a>
+						))}
+					</div>
+				</section>
+			)}
+
+			<section class="listings-section">
+				<div class="layout">
+					<div>
+						<h2>Salones en {prov.capital}</h2>
+						<div class="listings-grid">
+							{capitalNegocios.map((n) => {
+								const nSlug = slugify(n.nombre);
+								if (!nSlug) return null;
+								return (
+									<div class="listing-card">
+										<div>
+											<span class="listing-cat">{formatCategoria(n.categoria)}</span>
+											{n.verificado && <span class="verified">&#10003; Verificado</span>}
+											<h2 class="listing-name">
+												<a href={`/directorio/${provincia}/${nSlug}/`}>{n.nombre}</a>
+											</h2>
+											<div class="listing-meta">
+												<div class="listing-meta-item">
+													<span class="listing-meta-icon">&#128205;</span>
+													<span>{n.direccion}</span>
+												</div>
+												{n.telefono && (
+													<div class="listing-meta-item">
+														<span class="listing-meta-icon">&#128222;</span>
+														<span>{n.telefono}</span>
+													</div>
+												)}
+												{n.barrio && (
+													<div class="listing-meta-item">
+														<span class="listing-meta-icon">&#127968;</span>
+														<span>{n.barrio}</span>
+													</div>
+												)}
+											</div>
+											<div class="listing-links">
+												<a href={`/directorio/${provincia}/${nSlug}/`} class="listing-link link-details">Ver ficha</a>
+												{n.google_maps_url && (
+													<a href={n.google_maps_url} class="listing-link link-maps" target="_blank" rel="nofollow noopener">Google Maps</a>
+												)}
+												{n.web && n.dominio !== 'wa.me' && n.dominio !== 'instagram.com' && n.dominio !== 'www.instagram.com' && (
+													<a href={n.web} class="listing-link link-web" target="_blank" rel="nofollow noopener">Web</a>
+												)}
+											</div>
+										</div>
+										{n.rating && (
+											<div class="listing-rating">
+												<div class="rating-value">{n.rating}</div>
+												<div class="rating-stars">{renderEstrellas(n.rating)}</div>
+												<div class="rating-count">{n.num_resenas} reseñas</div>
+											</div>
+										)}
+									</div>
+								);
+							})}
+						</div>
+					</div>
+
+					<aside class="sidebar">
+						<div class="sidebar-card">
+							<h3>Otras provincias</h3>
+							{allProvincias.filter(p => p.slug !== provincia).slice(0, 12).map((p) => (
+								<a href={`/directorio/${p.slug}/`} class="sidebar-link">
+									{p.nombre}
+									<span class="sidebar-count">{p.total}</span>
+								</a>
+							))}
+						</div>
+						<div class="sidebar-card">
+							<h3>Guías populares</h3>
+							<a href="/blog/unas-de-gel-guia-completa" class="sidebar-link">Uñas de gel: guía completa</a>
+							<a href="/blog/precio-manicura-espana" class="sidebar-link">Precios de manicura en España</a>
+							<a href="/blog/manicura-semipermanente" class="sidebar-link">Manicura semipermanente</a>
+							<a href="/blog/manicura-rusa" class="sidebar-link">Manicura rusa</a>
+						</div>
+					</aside>
+				</div>
+			</section>
+		</div>
+
+		<Footer />
+	</body>
+</html>

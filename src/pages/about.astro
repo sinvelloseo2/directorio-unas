@@ -1,0 +1,247 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<!doctype html>
+<html lang="es">
+	<head>
+		<BaseHead
+			title="Sobre Nosotras – Tendencias de Uñas"
+			description="Conoce al equipo detrás de Tendencias de Uñas, la guía definitiva de manicura en español. Nuestra misión: información honesta, actualizada y práctica sobre nail art."
+		/>
+		<style>
+			.page-hero {
+				background: linear-gradient(135deg, #fff0f5 0%, #fce8ef 50%, #fff 100%);
+				padding: 4rem 1.5rem 3rem;
+				text-align: center;
+				border-bottom: 1px solid rgba(200,57,92,0.08);
+			}
+			.page-hero h1 {
+				font-size: clamp(1.8rem, 4vw, 2.6rem);
+				color: rgb(var(--black));
+				margin-bottom: 0.75rem;
+			}
+			.page-hero p {
+				font-size: 1rem;
+				color: rgb(var(--gray));
+				max-width: 560px;
+				margin: 0 auto;
+				line-height: 1.7;
+			}
+			.container {
+				max-width: 800px;
+				margin: 0 auto;
+				padding: 0 1.5rem;
+			}
+			.section { padding: 3.5rem 0; }
+			.section-alt { background: #fdf5f7; }
+			.prose h2 {
+				font-size: 1.5rem;
+				color: rgb(var(--black));
+				margin: 2rem 0 0.75rem;
+				padding-bottom: 0.5rem;
+				border-bottom: 2px solid var(--accent-light);
+			}
+			.prose p {
+				color: rgb(var(--gray-dark));
+				line-height: 1.8;
+				font-size: 0.97rem;
+				margin-bottom: 1.2rem;
+			}
+			.prose ul {
+				margin-bottom: 1.2rem;
+				padding-left: 0;
+				list-style: none;
+				display: flex;
+				flex-direction: column;
+				gap: 0.5rem;
+			}
+			.prose li {
+				color: rgb(var(--gray-dark));
+				font-size: 0.95rem;
+				padding-left: 1.5rem;
+				position: relative;
+				line-height: 1.5;
+			}
+			.prose li::before {
+				content: '💅';
+				position: absolute;
+				left: 0;
+				font-size: 0.85rem;
+			}
+			.values-grid {
+				display: grid;
+				grid-template-columns: repeat(2, 1fr);
+				gap: 1.2rem;
+				margin: 1.5rem 0;
+			}
+			.value-card {
+				background: white;
+				border-radius: 14px;
+				padding: 1.4rem;
+				border: 1px solid rgba(200,57,92,0.1);
+			}
+			.value-card h3 {
+				font-size: 0.95rem;
+				color: rgb(var(--black));
+				margin-bottom: 0.4rem;
+				display: flex;
+				align-items: center;
+				gap: 0.5rem;
+			}
+			.value-card p {
+				font-size: 0.85rem;
+				color: rgb(var(--gray));
+				margin: 0;
+				line-height: 1.55;
+			}
+			.team-grid {
+				display: grid;
+				grid-template-columns: repeat(2, 1fr);
+				gap: 1.5rem;
+				margin: 1.5rem 0;
+			}
+			.team-card {
+				background: white;
+				border-radius: 16px;
+				padding: 1.5rem;
+				border: 1px solid rgba(200,57,92,0.1);
+				text-align: center;
+			}
+			.team-avatar {
+				width: 64px;
+				height: 64px;
+				border-radius: 50%;
+				background: linear-gradient(135deg, #fce8ef, #f0e8fc);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 2rem;
+				margin: 0 auto 0.9rem;
+			}
+			.team-card h3 {
+				font-size: 1rem;
+				color: rgb(var(--black));
+				margin-bottom: 0.2rem;
+			}
+			.team-role {
+				font-size: 0.78rem;
+				color: var(--accent);
+				font-weight: 700;
+				text-transform: uppercase;
+				letter-spacing: 0.06em;
+				margin-bottom: 0.6rem;
+				display: block;
+			}
+			.team-card p {
+				font-size: 0.83rem;
+				color: rgb(var(--gray));
+				margin: 0;
+				line-height: 1.5;
+			}
+			.cta-box {
+				background: linear-gradient(135deg, #c8395c, #c9956e);
+				color: white;
+				border-radius: 20px;
+				padding: 2.5rem 2rem;
+				text-align: center;
+				margin: 2rem 0;
+			}
+			.cta-box h2 { color: white; margin-bottom: 0.6rem; font-size: 1.4rem; }
+			.cta-box p { opacity: 0.88; margin-bottom: 1.2rem; font-size: 0.92rem; }
+			.btn-white {
+				background: white;
+				color: var(--accent);
+				padding: 0.65rem 1.8rem;
+				border-radius: 50px;
+				font-weight: 700;
+				font-size: 0.9rem;
+				text-decoration: none;
+				display: inline-block;
+				transition: all 0.2s;
+			}
+			.btn-white:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.15); color: var(--accent-dark); }
+			@media (max-width: 540px) {
+				.values-grid, .team-grid { grid-template-columns: 1fr; }
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+
+		<div class="page-hero">
+			<h1>Sobre Tendencias de Uñas</h1>
+			<p>La guía definitiva de manicura en español: técnicas, tendencias y consejos profesionales para el mercado español.</p>
+		</div>
+
+		<section class="section">
+			<div class="container">
+				<div class="prose">
+					<h2>¿Qué es Tendencias de Uñas?</h2>
+					<p>
+						Tendencias de Uñas nació con una misión clara: crear el recurso más completo y honesto sobre manicura en español. Un lugar donde puedas resolver todas tus dudas sobre gel, semipermanente, acrílicas y nail art sin tener que buscar en varios sitios ni leer artículos en inglés.
+					</p>
+					<p>
+						Nuestro equipo lleva años siguiendo las tendencias del sector nail, probando técnicas y entrevistando a profesionales del sector. Todo lo que publicamos está basado en experiencia real, no en información copiada de otras webs.
+					</p>
+
+					<h2>Qué encontrarás aquí</h2>
+					<ul>
+						<li>Guías completas de todas las técnicas de manicura</li>
+						<li>Tendencias de temporada: colores, diseños y nail art</li>
+						<li>Comparativas honestas entre técnicas y productos</li>
+						<li>Precios reales en España actualizados</li>
+						<li>Tutoriales paso a paso para hacerlo en casa</li>
+						<li>Consejos para el cuidado y mantenimiento de las uñas</li>
+					</ul>
+
+					<h2>Nuestros valores</h2>
+					<div class="values-grid">
+						<div class="value-card">
+							<h3>📚 Información honesta</h3>
+							<p>No publicamos contenido patrocinado ni recomendaciones de productos que no hemos probado. Solo información real y contrastada.</p>
+						</div>
+						<div class="value-card">
+							<h3>🔄 Siempre actualizado</h3>
+							<p>Revisamos nuestros artículos regularmente para reflejar los precios actuales, nuevas técnicas y tendencias emergentes.</p>
+						</div>
+						<div class="value-card">
+							<h3>🇪🇸 Mercado español</h3>
+							<p>Nuestro foco es España: precios en euros, nombres de técnicas usados en salones españoles y tendencias adaptadas a nuestro mercado.</p>
+						</div>
+						<div class="value-card">
+							<h3>💡 Práctica y aplicable</h3>
+							<p>Cada artículo está escrito para que puedas tomar decisiones reales: qué pedir en el salón, qué técnica elegir, cómo cuidar tus uñas.</p>
+						</div>
+					</div>
+
+					<h2>Nuestro equipo</h2>
+					<div class="team-grid">
+						<div class="team-card">
+							<div class="team-avatar">💅</div>
+							<h3>Laura Moreno</h3>
+							<span class="team-role">Editora y nail artist</span>
+							<p>Técnica de uñas con 8 años de experiencia en salones de Madrid. Especializada en gel y nail art.</p>
+						</div>
+						<div class="team-card">
+							<div class="team-avatar">✨</div>
+							<h3>Sofía García</h3>
+							<span class="team-role">Redactora de tendencias</span>
+							<p>Periodista de moda y belleza. Sigue las tendencias nail de las semanas de la moda de París, Milán y NYC.</p>
+						</div>
+					</div>
+
+					<div class="cta-box">
+						<h2>¿Lista para lucir unas perfectas?</h2>
+						<p>Explora nuestras guías, elige tu técnica favorita y descubre las tendencias de la temporada.</p>
+						<a href="/blog" class="btn-white">Explorar artículos →</a>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<Footer />
+	</body>
+</html>

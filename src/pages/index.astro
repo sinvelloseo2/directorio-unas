@@ -1,0 +1,534 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { getProvincias, getTotal, getProvinciasCount, getFechaScraping } from '../data/directorio';
+
+const provincias = getProvincias();
+const totalNegocios = getTotal();
+const totalProvincias = getProvinciasCount();
+const fechaScraping = getFechaScraping();
+
+const allPosts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+const latestPosts = allPosts.slice(0, 3);
+
+const faqs = [
+	{
+		q: '¿Cómo encuentro un salón de uñas cerca de mí?',
+		a: 'Usa nuestro directorio para buscar por ciudad. Cada ficha incluye dirección, teléfono, valoraciones de Google y enlace directo a Google Maps.',
+	},
+	{
+		q: '¿Cuánto cuesta la manicura en España?',
+		a: 'El precio medio de una manicura semipermanente es de 20-35 €. Las uñas de gel o acrílicas con diseño cuestan entre 40 y 65 €. En Madrid y Barcelona los precios suelen ser más altos.',
+	},
+	{
+		q: '¿Es lo mismo gel que semipermanente?',
+		a: 'Coloquialmente se usan como sinónimos, pero el semipermanente es un tipo de gel polish que se aplica directamente sobre la uña natural, mientras que el gel de construcción añade estructura y longitud.',
+	},
+	{
+		q: '¿Los datos del directorio están actualizados?',
+		a: `Nuestro directorio se actualiza periódicamente con datos de Google Maps. Última actualización: ${fechaScraping}.`,
+	},
+];
+---
+
+<!doctype html>
+<html lang="es">
+	<head>
+		<BaseHead
+			title={`Salones de Uñas en España - Directorio + Guías | ${SITE_TITLE}`}
+			description={`Encuentra los mejores salones de uñas en las ${totalProvincias} provincias de España. Directorio con ${totalNegocios}+ negocios verificados + guías de manicura.`}
+		/>
+
+		<script type="application/ld+json" set:html={JSON.stringify({
+			"@context": "https://schema.org",
+			"@type": "WebSite",
+			"name": SITE_TITLE,
+			"url": "https://example.com",
+			"description": SITE_DESCRIPTION,
+			"inLanguage": "es",
+			"publisher": {
+				"@type": "Organization",
+				"name": SITE_TITLE,
+				"url": "https://example.com"
+			}
+		})} />
+
+		<script type="application/ld+json" set:html={JSON.stringify({
+			"@context": "https://schema.org",
+			"@type": "FAQPage",
+			"mainEntity": faqs.map(f => ({
+				"@type": "Question",
+				"name": f.q,
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": f.a
+				}
+			}))
+		})} />
+
+		<style>
+			.container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+			.section { padding: 4.5rem 0; }
+			.section-alt { background: #fdf5f7; }
+
+			.section-header {
+				text-align: center;
+				margin-bottom: 3rem;
+			}
+			.section-tag {
+				display: inline-block;
+				color: var(--accent);
+				font-size: 0.75rem;
+				font-weight: 700;
+				text-transform: uppercase;
+				letter-spacing: 0.12em;
+				margin-bottom: 0.4rem;
+			}
+			.section-header h2 {
+				font-size: clamp(1.6rem, 3vw, 2rem);
+				color: rgb(var(--black));
+				margin-bottom: 0.5rem;
+			}
+			.section-header p {
+				color: rgb(var(--gray));
+				font-size: 0.95rem;
+				max-width: 560px;
+				margin: 0 auto;
+				line-height: 1.6;
+			}
+
+			/* ── HERO ── */
+			.hero {
+				background: linear-gradient(135deg, #fff0f5 0%, #fce8ef 45%, #fffafc 100%);
+				padding: 5rem 1.5rem 4rem;
+				position: relative;
+				overflow: hidden;
+			}
+			.hero::before {
+				content: '';
+				position: absolute;
+				top: -80px; right: -80px;
+				width: 480px; height: 480px;
+				background: radial-gradient(circle, rgba(200,57,92,0.07) 0%, transparent 65%);
+				border-radius: 50%;
+				pointer-events: none;
+			}
+			.hero-inner {
+				max-width: 1200px;
+				margin: 0 auto;
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 3rem;
+				align-items: center;
+				position: relative;
+				z-index: 1;
+			}
+			.hero-badge {
+				display: inline-flex;
+				align-items: center;
+				gap: 0.4rem;
+				background: var(--accent);
+				color: white;
+				padding: 0.28rem 0.9rem;
+				border-radius: 50px;
+				font-size: 0.72rem;
+				font-weight: 700;
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				margin-bottom: 1.2rem;
+			}
+			.hero h1 {
+				font-size: clamp(2rem, 4.5vw, 3rem);
+				line-height: 1.1;
+				color: rgb(var(--black));
+				margin-bottom: 1rem;
+				font-weight: 800;
+			}
+			.hero h1 em { font-style: normal; color: var(--accent); }
+			.hero-desc {
+				font-size: 1.05rem;
+				color: rgb(var(--gray));
+				max-width: 480px;
+				margin-bottom: 2rem;
+				line-height: 1.7;
+			}
+			.hero-actions { display: flex; gap: 0.9rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+			.btn {
+				display: inline-flex;
+				align-items: center;
+				gap: 0.4rem;
+				padding: 0.7rem 1.7rem;
+				border-radius: 50px;
+				font-weight: 700;
+				font-size: 0.9rem;
+				text-decoration: none;
+				transition: all 0.2s;
+				cursor: pointer;
+			}
+			.btn-primary {
+				background: var(--accent);
+				color: white;
+				box-shadow: 0 4px 16px rgba(200,57,92,0.28);
+			}
+			.btn-primary:hover {
+				background: var(--accent-dark);
+				transform: translateY(-2px);
+				box-shadow: 0 7px 22px rgba(200,57,92,0.38);
+				color: white;
+			}
+			.btn-outline {
+				background: white;
+				color: var(--accent);
+				border: 2px solid var(--accent);
+			}
+			.btn-outline:hover {
+				background: var(--accent-light);
+				transform: translateY(-2px);
+				color: var(--accent);
+			}
+			.hero-stats { display: flex; gap: 2.2rem; }
+			.stat strong {
+				display: block;
+				font-size: 1.9rem;
+				font-weight: 800;
+				color: var(--accent);
+				line-height: 1;
+			}
+			.stat span { font-size: 0.82rem; color: rgb(var(--gray)); }
+			.hero-visual { display: flex; justify-content: center; align-items: center; }
+			.hero-blob {
+				width: 340px; height: 340px;
+				background: linear-gradient(135deg, rgba(200,57,92,0.12), rgba(201,149,110,0.1));
+				border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+				animation: blobmorph 9s ease-in-out infinite;
+				display: flex; align-items: center; justify-content: center;
+				font-size: 6.5rem;
+				user-select: none;
+			}
+			@keyframes blobmorph {
+				0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+				33% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+				66% { border-radius: 50% 50% 40% 60% / 40% 50% 60% 50%; }
+			}
+
+			/* ── CITIES GRID ── */
+			.cities-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+				gap: 1rem;
+			}
+			.city-card {
+				background: white;
+				border-radius: 14px;
+				padding: 1.3rem 1.4rem;
+				text-decoration: none;
+				color: inherit;
+				border: 1px solid rgba(200,57,92,0.1);
+				transition: all 0.25s;
+				display: flex;
+				align-items: center;
+				gap: 1rem;
+			}
+			.city-card:hover {
+				transform: translateY(-3px);
+				box-shadow: 0 10px 28px rgba(200,57,92,0.12);
+				border-color: var(--accent);
+			}
+			.city-icon {
+				width: 46px; height: 46px;
+				background: var(--accent-light);
+				border-radius: 12px;
+				display: flex; align-items: center; justify-content: center;
+				font-size: 1.3rem;
+				flex-shrink: 0;
+			}
+			.city-info h3 {
+				font-size: 0.95rem;
+				color: rgb(var(--black));
+				margin: 0 0 0.15rem;
+				font-weight: 700;
+			}
+			.city-count {
+				font-size: 0.8rem;
+				color: rgb(var(--gray));
+			}
+
+			/* ── SEARCH BAR ── */
+			.search-bar {
+				max-width: 500px;
+				margin: 0 auto 2.5rem;
+				position: relative;
+			}
+			.search-bar input {
+				width: 100%;
+				padding: 0.85rem 1.2rem 0.85rem 3rem;
+				border: 2px solid rgba(200,57,92,0.15);
+				border-radius: 50px;
+				font-size: 0.95rem;
+				font-family: inherit;
+				color: rgb(var(--black));
+				background: white;
+				transition: border-color 0.2s;
+				box-sizing: border-box;
+			}
+			.search-bar input:focus {
+				outline: none;
+				border-color: var(--accent);
+			}
+			.search-bar input::placeholder { color: rgb(var(--gray)); }
+			.search-icon {
+				position: absolute;
+				left: 1.1rem;
+				top: 50%;
+				transform: translateY(-50%);
+				font-size: 1.1rem;
+				color: rgb(var(--gray));
+				pointer-events: none;
+			}
+
+			/* ── BLOG PREVIEW ── */
+			.blog-grid {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 1.25rem;
+			}
+			.blog-card {
+				background: white;
+				border-radius: 14px;
+				padding: 1.5rem;
+				text-decoration: none;
+				color: inherit;
+				border: 1px solid rgba(200,57,92,0.08);
+				transition: all 0.25s;
+			}
+			.blog-card:hover {
+				transform: translateY(-3px);
+				box-shadow: 0 10px 28px rgba(200,57,92,0.1);
+				border-color: rgba(200,57,92,0.2);
+			}
+			.blog-card h3 {
+				font-size: 0.95rem;
+				color: rgb(var(--black));
+				margin: 0 0 0.5rem;
+				line-height: 1.3;
+				font-weight: 600;
+			}
+			.blog-card p {
+				font-size: 0.85rem;
+				color: rgb(var(--gray));
+				margin: 0 0 0.75rem;
+				line-height: 1.5;
+				display: -webkit-box;
+				-webkit-line-clamp: 2;
+				-webkit-box-orient: vertical;
+				overflow: hidden;
+			}
+			.blog-date {
+				font-size: 0.78rem;
+				color: rgb(var(--gray));
+				opacity: 0.7;
+			}
+			.view-all {
+				color: var(--accent);
+				font-weight: 700;
+				text-decoration: none;
+				font-size: 0.88rem;
+				display: inline-flex;
+				align-items: center;
+				gap: 0.3rem;
+				transition: gap 0.2s;
+			}
+			.view-all:hover { gap: 0.6rem; color: var(--accent); }
+
+			/* ── BANNER ── */
+			.cta-banner {
+				background: linear-gradient(135deg, #c8395c 0%, #d9547a 50%, #c9956e 100%);
+				color: white;
+				padding: 3.5rem 1.5rem;
+				text-align: center;
+			}
+			.cta-banner h2 { font-size: clamp(1.4rem, 3vw, 1.9rem); color: white; margin-bottom: 0.6rem; }
+			.cta-banner p { font-size: 0.95rem; opacity: 0.88; max-width: 500px; margin: 0 auto 1.5rem; line-height: 1.6; }
+			.btn-white {
+				background: white; color: var(--accent);
+				padding: 0.7rem 2rem; border-radius: 50px;
+				font-weight: 700; font-size: 0.9rem;
+				text-decoration: none; display: inline-block;
+				transition: all 0.2s;
+				box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+			}
+			.btn-white:hover {
+				transform: translateY(-2px);
+				box-shadow: 0 8px 22px rgba(0,0,0,0.18);
+				color: var(--accent-dark);
+			}
+
+			/* ── FAQ ── */
+			.faq-grid {
+				display: grid;
+				grid-template-columns: repeat(2, 1fr);
+				gap: 1.2rem;
+			}
+			.faq-item {
+				background: white;
+				border-radius: 14px;
+				padding: 1.4rem 1.4rem 1.4rem 1.8rem;
+				border: 1px solid rgba(200,57,92,0.1);
+				position: relative;
+			}
+			.faq-item::before {
+				content: '';
+				position: absolute;
+				left: -1px; top: 0; bottom: 0;
+				width: 5px;
+				background: var(--accent);
+				border-radius: 14px 0 0 14px;
+			}
+			.faq-item h3 { font-size: 0.95rem; color: rgb(var(--black)); margin-bottom: 0.6rem; font-weight: 700; line-height: 1.3; }
+			.faq-item p { font-size: 0.85rem; color: rgb(var(--gray)); margin: 0; line-height: 1.6; }
+
+			/* ── RESPONSIVE ── */
+			@media (max-width: 768px) {
+				.hero-inner { grid-template-columns: 1fr; }
+				.hero-visual { display: none; }
+				.blog-grid { grid-template-columns: 1fr; }
+				.faq-grid { grid-template-columns: 1fr; }
+			}
+			@media (max-width: 540px) {
+				.hero { padding: 3.5rem 1rem 3rem; }
+				.cities-grid { grid-template-columns: repeat(2, 1fr); }
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+
+		<!-- ──────────── HERO ──────────── -->
+		<section class="hero">
+			<div class="hero-inner">
+				<div>
+					<span class="hero-badge">Directorio + Guías 2026</span>
+					<h1>Salones de <em>uñas</em> en <em>España</em></h1>
+					<p class="hero-desc">
+						Encuentra el mejor salón de uñas cerca de ti. Directorio con valoraciones reales de Google + guías profesionales de manicura.
+					</p>
+					<div class="hero-actions">
+						<a href="#directorio" class="btn btn-primary">Buscar salón</a>
+						<a href="/blog" class="btn btn-outline">Ver guías</a>
+					</div>
+					<div class="hero-stats">
+						<div class="stat">
+							<strong>{totalNegocios}+</strong>
+							<span>Salones</span>
+						</div>
+						<div class="stat">
+							<strong>{totalProvincias}</strong>
+							<span>Provincias</span>
+						</div>
+						<div class="stat">
+							<strong>{allPosts.length}+</strong>
+							<span>Guías</span>
+						</div>
+					</div>
+				</div>
+				<div class="hero-visual" aria-hidden="true">
+					<div class="hero-blob">💅</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- ──────────── DIRECTORIO POR CIUDADES ──────────── -->
+		<section class="section" id="directorio">
+			<div class="container">
+				<div class="section-header">
+					<span class="section-tag">Directorio</span>
+					<h2>Salones de uñas por provincia</h2>
+					<p>Selecciona tu provincia para ver todos los salones de uñas con valoraciones, teléfono y dirección</p>
+				</div>
+
+				<div class="search-bar">
+					<span class="search-icon">&#128269;</span>
+					<input type="text" id="citySearch" placeholder="Buscar provincia..." autocomplete="off" />
+				</div>
+
+				<div class="cities-grid" id="citiesGrid">
+					{provincias.map((prov) => (
+						<a href={`/directorio/${prov.slug}/`} class="city-card" data-city={prov.nombre.toLowerCase()}>
+							<div class="city-icon">📍</div>
+							<div class="city-info">
+								<h3>{prov.nombre}</h3>
+								<span class="city-count">{prov.total} {prov.total === 1 ? 'salón' : 'salones'}</span>
+							</div>
+						</a>
+					))}
+				</div>
+			</div>
+		</section>
+
+		<!-- ──────────── BANNER BLOG ──────────── -->
+		<section class="cta-banner">
+			<div class="container">
+				<h2>Guías profesionales de manicura</h2>
+				<p>Técnicas, tendencias 2026, precios y consejos de expertas para lucir unas uñas perfectas</p>
+				<a href="/blog" class="btn-white">Explorar guías</a>
+			</div>
+		</section>
+
+		<!-- ──────────── ÚLTIMAS GUÍAS ──────────── -->
+		<section class="section">
+			<div class="container">
+				<div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:2rem;">
+					<h2 style="font-size:clamp(1.4rem,2.5vw,1.8rem);color:rgb(var(--black));margin:0;">Últimas guías</h2>
+					<a href="/blog" class="view-all">Ver todas</a>
+				</div>
+				<div class="blog-grid">
+					{latestPosts.map((post) => (
+						<a href={`/blog/${post.id}/`} class="blog-card">
+							<h3>{post.data.title}</h3>
+							<p>{post.data.description}</p>
+							<span class="blog-date"><FormattedDate date={post.data.pubDate} /></span>
+						</a>
+					))}
+				</div>
+			</div>
+		</section>
+
+		<!-- ──────────── FAQ ──────────── -->
+		<section class="section section-alt">
+			<div class="container">
+				<div class="section-header">
+					<span class="section-tag">Dudas frecuentes</span>
+					<h2>Preguntas sobre manicura</h2>
+				</div>
+				<div class="faq-grid">
+					{faqs.map((faq) => (
+						<div class="faq-item">
+							<h3>{faq.q}</h3>
+							<p>{faq.a}</p>
+						</div>
+					))}
+				</div>
+			</div>
+		</section>
+
+		<Footer />
+
+		<script>
+			const input = document.getElementById('citySearch') as HTMLInputElement;
+			const cards = document.querySelectorAll<HTMLElement>('.city-card');
+			input?.addEventListener('input', () => {
+				const q = input.value.toLowerCase().trim();
+				cards.forEach((card) => {
+					const city = card.getAttribute('data-city') || '';
+					card.style.display = city.includes(q) ? '' : 'none';
+				});
+			});
+		</script>
+	</body>
+</html>

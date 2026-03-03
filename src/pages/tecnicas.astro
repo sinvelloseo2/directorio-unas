@@ -1,0 +1,381 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const title = 'Técnicas de Manicura: Guía Completa 2026';
+const description = 'Descubre todas las técnicas de manicura: gel, semipermanente, acrílicas, francesas, nail art y más. Comparativa de duración, precios y consejos para elegir la mejor opción.';
+
+const techniques = [
+	{
+		icon: '💅',
+		title: 'Uñas de Gel',
+		subtitle: 'La favorita de España',
+		desc: 'El gel polish es el tipo de manicura más popular en los salones españoles. Se aplica como un esmalte pero se cura bajo lámpara UV/LED, lo que le da una dureza y brillo superior al esmalte convencional.',
+		pros: ['Brillo intenso y duradero', 'Sin astillas ni descascarillado', 'Gran variedad de colores', 'Permite nail art detallado'],
+		cons: ['Requiere lámpara LED/UV', 'Retirada con acetona', 'Más caro que el esmalte normal'],
+		duration: '3 – 4 semanas',
+		price: '25 – 45 €',
+		href: '/blog/unas-de-gel-guia-completa',
+		color: '#fce8ef',
+		badge: 'Más popular',
+	},
+	{
+		icon: '✨',
+		title: 'Semipermanente',
+		subtitle: 'Natural y versátil',
+		desc: 'Técnicamente es un tipo de gel polish, pero en España se usa para diferenciar el esmalte de larga duración sin estructura. Se aplica directamente sobre la uña natural en finas capas.',
+		pros: ['Acabado natural', 'Uña más flexible', 'Fácil de retirar', 'Precio accesible'],
+		cons: ['Menos resistente que el gel de construcción', 'Dura menos que las acrílicas'],
+		duration: '2 – 3 semanas',
+		price: '20 – 35 €',
+		href: '/blog/manicura-semipermanente',
+		color: '#f0e8fc',
+		badge: 'Más natural',
+	},
+	{
+		icon: '🌸',
+		title: 'Uñas Francesas',
+		subtitle: 'El clásico eterno',
+		desc: 'La manicura francesa combina una base rosada o nude con una punta blanca. En 2026 ha evolucionado con nuevas versiones: reverse french, francesas de colores, con glitter y diseños geométricos.',
+		pros: ['Elegante en cualquier ocasión', 'Infinitas variaciones 2026', 'Queda bien con cualquier look', 'Atemporal'],
+		cons: ['Puede verse artificial en versión clásica', 'Requiere precisión en la aplicación'],
+		duration: '2 – 4 semanas (según sistema)',
+		price: '15 – 60 €',
+		href: '/blog/unas-francesas-2026',
+		color: '#e8f0fc',
+		badge: 'Clásico',
+	},
+	{
+		icon: '💎',
+		title: 'Uñas Acrílicas',
+		subtitle: 'Máxima resistencia',
+		desc: 'Las uñas acrílicas se crean con una mezcla de polvo y líquido que forma una pasta dura. Son perfectas para alargar la uña o crear estructuras resistentes. Ideales si trabajas mucho con las manos.',
+		pros: ['Gran durabilidad (4-6 semanas)', 'Perfectas para alargar', 'Muy resistentes', 'Mantienen la forma perfectamente'],
+		cons: ['Proceso de aplicación más largo', 'Retirada profesional recomendada', 'Menor flexibilidad'],
+		duration: '4 – 6 semanas',
+		price: '35 – 65 €',
+		href: '/blog/unas-acrilicas',
+		color: '#fcf0e8',
+		badge: 'Más durable',
+	},
+	{
+		icon: '🎨',
+		title: 'Nail Art',
+		subtitle: 'Expresión artística',
+		desc: 'El nail art engloba todos los diseños decorativos sobre las uñas: flores pintadas a mano, efecto mármol, cromados, piedras, foil dorado, diseños geométricos y mucho más.',
+		pros: ['Personalización total', 'Tendencias cambiantes', 'Expresa tu personalidad', 'Resultados únicos'],
+		cons: ['Requiere más tiempo de aplicación', 'Generalmente más caro', 'Algunos diseños duran menos'],
+		duration: 'Según la técnica base',
+		price: '+10 – 30 € sobre el precio base',
+		href: '/blog/unas-cortas-disenos',
+		color: '#e8fce8',
+		badge: 'Creativo',
+	},
+	{
+		icon: '💆',
+		title: 'Manicura Rusa',
+		subtitle: 'La más limpia',
+		desc: 'La manicura rusa (e-file manicure) utiliza una fresa eléctrica para limpiar la cutícula de forma más profunda y precisa. El resultado es una manicura extremadamente limpia y duradera.',
+		pros: ['Acabado muy limpio y definido', 'Mayor duración del esmalte', 'Cutículas perfectamente tratadas', 'Tendencia en auge'],
+		cons: ['Requiere profesional especializado', 'Precio más alto', 'No recomendada para cutículas delicadas'],
+		duration: '3 – 4 semanas',
+		price: '35 – 55 €',
+		href: '/blog/manicura-rusa',
+		color: '#fce8f5',
+		badge: 'En tendencia',
+	},
+];
+
+const comparison = [
+	{ name: 'Semipermanente', duration: '2-3 sem', price: '20-35€', damage: 'Bajo', natural: '★★★★★' },
+	{ name: 'Gel Polish', duration: '3-4 sem', price: '25-45€', damage: 'Bajo', natural: '★★★★☆' },
+	{ name: 'Uñas Francesas', duration: '2-4 sem', price: '15-60€', damage: 'Bajo', natural: '★★★★☆' },
+	{ name: 'Manicura Rusa', duration: '3-4 sem', price: '35-55€', damage: 'Bajo', natural: '★★★★★' },
+	{ name: 'Uñas Acrílicas', duration: '4-6 sem', price: '35-65€', damage: 'Medio', natural: '★★★☆☆' },
+];
+---
+
+<!doctype html>
+<html lang="es">
+	<head>
+		<BaseHead title={title} description={description} />
+		<style>
+			.page-hero {
+				background: linear-gradient(135deg, #fff0f5 0%, #fce8ef 50%, #fff 100%);
+				padding: 4rem 1.5rem 3rem;
+				text-align: center;
+				border-bottom: 1px solid rgba(200,57,92,0.08);
+			}
+			.page-hero h1 {
+				font-size: clamp(1.8rem, 4vw, 2.8rem);
+				color: rgb(var(--black));
+				margin-bottom: 0.75rem;
+			}
+			.page-hero p {
+				font-size: 1rem;
+				color: rgb(var(--gray));
+				max-width: 600px;
+				margin: 0 auto;
+				line-height: 1.7;
+			}
+			.container {
+				max-width: 1200px;
+				margin: 0 auto;
+				padding: 0 1.5rem;
+			}
+			.section { padding: 4rem 0; }
+			.section-alt { background: #fdf5f7; }
+			.section-title {
+				font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+				color: rgb(var(--black));
+				margin-bottom: 2rem;
+				text-align: center;
+			}
+
+			/* TECHNIQUE CARDS */
+			.techniques-list {
+				display: flex;
+				flex-direction: column;
+				gap: 2rem;
+			}
+			.tech-card {
+				background: white;
+				border-radius: 20px;
+				border: 1px solid rgba(200,57,92,0.1);
+				overflow: hidden;
+				display: grid;
+				grid-template-columns: 280px 1fr;
+			}
+			.tech-side {
+				padding: 2rem;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				text-align: center;
+				position: relative;
+			}
+			.tech-badge {
+				position: absolute;
+				top: 1rem; left: 1rem;
+				background: var(--accent);
+				color: white;
+				font-size: 0.68rem;
+				font-weight: 700;
+				text-transform: uppercase;
+				letter-spacing: 0.06em;
+				padding: 0.2rem 0.6rem;
+				border-radius: 50px;
+			}
+			.tech-icon { font-size: 3.5rem; margin-bottom: 0.8rem; line-height: 1; }
+			.tech-side h2 {
+				font-size: 1.3rem;
+				color: rgb(var(--black));
+				margin-bottom: 0.2rem;
+			}
+			.tech-subtitle {
+				font-size: 0.82rem;
+				color: rgb(var(--gray));
+				margin-bottom: 1.2rem;
+			}
+			.tech-meta {
+				display: flex;
+				flex-direction: column;
+				gap: 0.5rem;
+				width: 100%;
+			}
+			.meta-item {
+				background: rgba(200,57,92,0.06);
+				border-radius: 8px;
+				padding: 0.5rem 0.8rem;
+				font-size: 0.8rem;
+			}
+			.meta-label {
+				font-weight: 700;
+				color: var(--accent);
+				display: block;
+				font-size: 0.7rem;
+				text-transform: uppercase;
+				letter-spacing: 0.05em;
+			}
+			.meta-value { color: rgb(var(--black)); }
+			.tech-body { padding: 2rem; }
+			.tech-body p {
+				color: rgb(var(--gray));
+				font-size: 0.92rem;
+				line-height: 1.7;
+				margin-bottom: 1.5rem;
+			}
+			.pros-cons {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 1rem;
+				margin-bottom: 1.5rem;
+			}
+			.pros h4, .cons h4 {
+				font-size: 0.78rem;
+				text-transform: uppercase;
+				letter-spacing: 0.08em;
+				margin-bottom: 0.6rem;
+			}
+			.pros h4 { color: #2a9d5c; }
+			.cons h4 { color: #c8395c; }
+			.pros ul, .cons ul {
+				list-style: none;
+				padding: 0;
+				margin: 0;
+				display: flex;
+				flex-direction: column;
+				gap: 0.35rem;
+			}
+			.pros li, .cons li {
+				font-size: 0.83rem;
+				color: rgb(var(--gray-dark));
+				padding-left: 1.2rem;
+				position: relative;
+				line-height: 1.4;
+			}
+			.pros li::before { content: '✓'; position: absolute; left: 0; color: #2a9d5c; font-weight: 700; }
+			.cons li::before { content: '×'; position: absolute; left: 0; color: #c8395c; font-weight: 700; }
+			.tech-link {
+				display: inline-flex;
+				align-items: center;
+				gap: 0.4rem;
+				background: var(--accent);
+				color: white;
+				padding: 0.6rem 1.4rem;
+				border-radius: 50px;
+				font-weight: 700;
+				font-size: 0.87rem;
+				text-decoration: none;
+				transition: all 0.2s;
+			}
+			.tech-link:hover {
+				background: var(--accent-dark);
+				color: white;
+				transform: translateY(-1px);
+			}
+
+			/* COMPARISON TABLE */
+			.table-wrap { overflow-x: auto; }
+			table {
+				width: 100%;
+				border-collapse: collapse;
+				background: white;
+				border-radius: 12px;
+				overflow: hidden;
+				box-shadow: 0 2px 12px rgba(200,57,92,0.06);
+			}
+			thead { background: var(--accent); color: white; }
+			th {
+				padding: 0.9rem 1.2rem;
+				text-align: left;
+				font-size: 0.82rem;
+				font-weight: 700;
+				text-transform: uppercase;
+				letter-spacing: 0.06em;
+			}
+			td {
+				padding: 0.9rem 1.2rem;
+				font-size: 0.88rem;
+				color: rgb(var(--gray-dark));
+				border-bottom: 1px solid rgba(200,57,92,0.06);
+			}
+			tbody tr:last-child td { border-bottom: none; }
+			tbody tr:hover td { background: #fdf5f7; }
+			td:first-child { font-weight: 600; color: rgb(var(--black)); }
+
+			@media (max-width: 768px) {
+				.tech-card { grid-template-columns: 1fr; }
+				.tech-body { padding: 0 1.5rem 1.5rem; }
+				.pros-cons { grid-template-columns: 1fr; }
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+
+		<div class="page-hero">
+			<h1>Técnicas de Manicura 2026</h1>
+			<p>Guía completa para elegir la manicura perfecta según tu estilo, presupuesto y estilo de vida. Comparativa honesta de todas las técnicas.</p>
+		</div>
+
+		<section class="section">
+			<div class="container">
+				<div class="techniques-list">
+					{techniques.map((t) => (
+						<div class="tech-card">
+							<div class="tech-side" style={{ backgroundColor: t.color }}>
+								<span class="tech-badge">{t.badge}</span>
+								<span class="tech-icon">{t.icon}</span>
+								<h2>{t.title}</h2>
+								<p class="tech-subtitle">{t.subtitle}</p>
+								<div class="tech-meta">
+									<div class="meta-item">
+										<span class="meta-label">Duración</span>
+										<span class="meta-value">{t.duration}</span>
+									</div>
+									<div class="meta-item">
+										<span class="meta-label">Precio en España</span>
+										<span class="meta-value">{t.price}</span>
+									</div>
+								</div>
+							</div>
+							<div class="tech-body">
+								<p>{t.desc}</p>
+								<div class="pros-cons">
+									<div class="pros">
+										<h4>Ventajas</h4>
+										<ul>
+											{t.pros.map(p => <li>{p}</li>)}
+										</ul>
+									</div>
+									<div class="cons">
+										<h4>Desventajas</h4>
+										<ul>
+											{t.cons.map(c => <li>{c}</li>)}
+										</ul>
+									</div>
+								</div>
+								<a href={t.href} class="tech-link">Leer guía completa →</a>
+							</div>
+						</div>
+					))}
+				</div>
+			</div>
+		</section>
+
+		<section class="section section-alt">
+			<div class="container">
+				<h2 class="section-title">Comparativa rápida de técnicas</h2>
+				<div class="table-wrap">
+					<table>
+						<thead>
+							<tr>
+								<th>Técnica</th>
+								<th>Duración</th>
+								<th>Precio</th>
+								<th>Daño</th>
+								<th>Naturalidad</th>
+							</tr>
+						</thead>
+						<tbody>
+							{comparison.map(row => (
+								<tr>
+									<td>{row.name}</td>
+									<td>{row.duration}</td>
+									<td>{row.price}</td>
+									<td>{row.damage}</td>
+									<td>{row.natural}</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</section>
+
+		<Footer />
+	</body>
+</html>
