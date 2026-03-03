@@ -10,11 +10,37 @@ import Breadcrumb from '../components/Breadcrumb.astro';
 type Props = CollectionEntry<'blog'>['data'];
 
 const { title, description, pubDate, updatedDate, heroImage, heroImageAlt } = Astro.props;
+
+const site = 'https://directorio-unas.vercel.app';
+const articleSchema = {
+	"@context": "https://schema.org",
+	"@type": "BlogPosting",
+	"headline": title,
+	"description": description,
+	"datePublished": pubDate.toISOString(),
+	...(updatedDate ? { "dateModified": updatedDate.toISOString() } : {}),
+	...(heroImage ? { "image": `${site}${heroImage.src}` } : {}),
+	"author": {
+		"@type": "Organization",
+		"name": "Tendencias de Uñas",
+		"url": site,
+	},
+	"publisher": {
+		"@type": "Organization",
+		"name": "Tendencias de Uñas",
+		"url": site,
+	},
+	"mainEntityOfPage": {
+		"@type": "WebPage",
+		"@id": `${site}${Astro.url.pathname}`,
+	},
+};
 ---
 
 <html lang="es">
 	<head>
 		<BaseHead title={title} description={description} />
+		<script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
 		<style>
 			main {
 				width: calc(100% - 2em);
