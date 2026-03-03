@@ -68,17 +68,17 @@ Lima correctamente para evitar daños:
 - Aceite de cutículas 2 veces al día
 - Lima de cristal para mantener la forma
 
-### Con [semipermanente](/blog/manicura-semipermanente)
+### Con semipermanente
 - Aceite de cutículas a diario para mantener el borde limpio
 - No arranques el esmalte que se levante (ve al salón)
 - Guantes para fregar
 
-### Con [gel de construcción](/blog/unas-de-gel-guia-completa)
+### Con gel de construcción
 - Aceite de cutículas a diario
 - Cuidado con los golpes fuertes (el gel es rígido y puede partirse con la uña debajo)
 - [Retira siempre en el salón](/blog/como-quitar-gel-casa) o con el método correcto en casa
 
-### Con [acrílicas](/blog/unas-acrilicas)
+### Con acrílicas
 - Hidratación extra (el acrílico reseca la zona periungueal)
 - Rellenos puntuales para evitar que se levante y entre humedad
 - Descansos periódicos para que la uña natural se recupere
