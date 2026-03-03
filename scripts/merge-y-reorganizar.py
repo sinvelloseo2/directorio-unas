@@ -77,11 +77,31 @@ CAPITAL_ALIASES = {
     "Palma De Mallorca": "Palma de Mallorca",
     "Donostia / San Sebastián": "San Sebastián",
     "Donostia": "San Sebastián",
+    "Donostia-San Sebastián": "San Sebastián",
     "Las Palmas de Gran Canaria": "Las Palmas",
     "València": "Valencia",
     "Castelló de la Plana": "Castellón de la Plana",
     "Castellón de la Plana": "Castellón de la Plana",
     "Castellon de la Plana": "Castellón de la Plana",
+    "Castellón": "Castellón de la Plana",
+    "CASTELLON": "Castellón de la Plana",
+    # A Coruña variants from Google Maps
+    "La Coruña": "A Coruña",
+    "Coruña (A)": "A Coruña",
+    "Coruña ( A )": "A Coruña",
+    "Coruña": "A Coruña",
+    # Lleida variants
+    "Lleida, Tây Ban Nha": "Lleida",
+    "Lérida": "Lleida",
+    # Girona variants
+    "Gerona": "Girona",
+    # Ourense variants
+    "Orense": "Ourense",
+    # Vitoria variants
+    "Vitoria": "Vitoria-Gasteiz",
+    # Pamplona variants
+    "Iruña": "Pamplona",
+    "Pamplona/Iruña": "Pamplona",
 }
 
 # Mapeo ciudad_busqueda → provincia (para negocios sin region)
@@ -260,7 +280,11 @@ def main():
             provincias[prov_slug]["capital_negocios"].append(n)
         else:
             city_slug = slugify(actual_city)
-            if not city_slug:
+            # Skip invalid city slugs: empty, "null", purely numeric, or same as province slug
+            if not city_slug or city_slug == "null" or city_slug.isdigit() or city_slug == prov_slug:
+                # Assign to capital instead of creating bogus subcity
+                n["ciudad"] = capital
+                provincias[prov_slug]["capital_negocios"].append(n)
                 continue
             if city_slug not in provincias[prov_slug]["subcities"]:
                 provincias[prov_slug]["subcities"][city_slug] = {
