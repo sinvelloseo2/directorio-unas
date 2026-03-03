@@ -2,6 +2,7 @@
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
 
 const title = 'Técnicas de Manicura: Guía Completa 2026';
 const description = 'Descubre todas las técnicas de manicura: gel, semipermanente, acrílicas, francesas, nail art y más. Comparativa de duración, precios y consejos para elegir la mejor opción.';
@@ -295,6 +296,13 @@ const comparison = [
 	</head>
 	<body>
 		<Header />
+
+		<div style="max-width:1200px;margin:0 auto;padding:0 1.5rem;">
+			<Breadcrumb items={[
+				{ label: 'Inicio', href: '/' },
+				{ label: 'Técnicas de Manicura' },
+			]} />
+		</div>
 
 		<div class="page-hero">
 			<h1>Técnicas de Manicura 2026</h1>

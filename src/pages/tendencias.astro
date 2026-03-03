@@ -2,6 +2,7 @@
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
 import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 import FormattedDate from '../components/FormattedDate.astro';
@@ -258,6 +259,13 @@ const allTrendPosts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.
 	</head>
 	<body>
 		<Header />
+
+		<div style="max-width:1200px;margin:0 auto;padding:0 1.5rem;">
+			<Breadcrumb items={[
+				{ label: 'Inicio', href: '/' },
+				{ label: 'Tendencias' },
+			]} />
+		</div>
 
 		<div class="page-hero">
 			<h1>Tendencias de Uñas 2026</h1>

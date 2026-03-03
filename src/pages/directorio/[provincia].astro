@@ -3,6 +3,7 @@ import BaseHead from '../../components/BaseHead.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import { SITE_TITLE } from '../../consts';
+import Breadcrumb from '../../components/Breadcrumb.astro';
 import { getProvincias, getProvincia, getCapitalNegocios, getSubcities, slugify, formatCategoria, renderEstrellas } from '../../data/directorio';
 
 export function getStaticPaths() {
@@ -51,11 +52,6 @@ const allProvincias = getProvincias();
 
 		<style>
 			.container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
-
-			.breadcrumb { padding: 1rem 0; font-size: 0.82rem; color: rgb(var(--gray)); }
-			.breadcrumb a { color: var(--accent); text-decoration: none; }
-			.breadcrumb a:hover { text-decoration: underline; }
-			.breadcrumb span { margin: 0 0.4rem; }
 
 			.page-header {
 				background: linear-gradient(135deg, #fff0f5 0%, #fce8ef 45%, #fffafc 100%);
@@ -266,13 +262,11 @@ const allProvincias = getProvincias();
 		<Header />
 
 		<div class="container">
-			<nav class="breadcrumb">
-				<a href="/">Inicio</a>
-				<span>/</span>
-				<a href="/#directorio">Directorio</a>
-				<span>/</span>
-				{prov.nombre}
-			</nav>
+			<Breadcrumb items={[
+				{ label: 'Inicio', href: '/' },
+				{ label: 'Directorio', href: '/#directorio' },
+				{ label: prov.nombre },
+			]} />
 		</div>
 
 		<section class="page-header">

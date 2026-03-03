@@ -2,6 +2,7 @@
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
 ---
 
 <!doctype html>
@@ -170,6 +171,13 @@ import Footer from '../components/Footer.astro';
 	</head>
 	<body>
 		<Header />
+
+		<div style="max-width:1200px;margin:0 auto;padding:0 1.5rem;">
+			<Breadcrumb items={[
+				{ label: 'Inicio', href: '/' },
+				{ label: 'Sobre Nosotras' },
+			]} />
+		</div>
 
 		<div class="page-hero">
 			<h1>Sobre Tendencias de Uñas</h1>

@@ -2,6 +2,7 @@
 import BaseHead from '../../../../components/BaseHead.astro';
 import Header from '../../../../components/Header.astro';
 import Footer from '../../../../components/Footer.astro';
+import Breadcrumb from '../../../../components/Breadcrumb.astro';
 import { SITE_TITLE } from '../../../../consts';
 import {
 	getProvincias,
@@ -125,11 +126,6 @@ const diasSemana = {
 
 		<style>
 			.container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
-			.breadcrumb { padding: 1rem 0; font-size: 0.82rem; color: rgb(var(--gray)); }
-			.breadcrumb a { color: var(--accent); text-decoration: none; }
-			.breadcrumb a:hover { text-decoration: underline; }
-			.breadcrumb span { margin: 0 0.4rem; }
-
 			.negocio-layout { display: grid; grid-template-columns: 1fr 340px; gap: 2rem; padding-bottom: 4rem; align-items: start; }
 			.main-card { background: white; border-radius: 18px; overflow: hidden; border: 1px solid rgba(200,57,92,0.1); box-shadow: 0 4px 20px rgba(200,57,92,0.06); }
 			.main-header { background: linear-gradient(135deg, #fff0f5, #fce8ef); padding: 2rem 2rem 1.5rem; }
@@ -199,17 +195,13 @@ const diasSemana = {
 		<Header />
 
 		<div class="container">
-			<nav class="breadcrumb">
-				<a href="/">Inicio</a>
-				<span>/</span>
-				<a href="/#directorio">Directorio</a>
-				<span>/</span>
-				<a href={`/directorio/${provincia}/`}>{prov.nombre}</a>
-				<span>/</span>
-				<a href={`/directorio/${provincia}/${subcity}/`}>{subcityNombre}</a>
-				<span>/</span>
-				{negocio.nombre}
-			</nav>
+			<Breadcrumb items={[
+				{ label: 'Inicio', href: '/' },
+				{ label: 'Directorio', href: '/#directorio' },
+				{ label: prov.nombre, href: `/directorio/${provincia}/` },
+				{ label: subcityNombre, href: `/directorio/${provincia}/${subcity}/` },
+				{ label: negocio.nombre },
+			]} />
 		</div>
 
 		<div class="container">

@@ -2,6 +2,7 @@
 import BaseHead from '../../../components/BaseHead.astro';
 import Header from '../../../components/Header.astro';
 import Footer from '../../../components/Footer.astro';
+import Breadcrumb from '../../../components/Breadcrumb.astro';
 import { SITE_TITLE } from '../../../consts';
 import {
 	getProvincias,
@@ -175,11 +176,6 @@ const diasSemana = {
 		<style>
 			.container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
 
-			.breadcrumb { padding: 1rem 0; font-size: 0.82rem; color: rgb(var(--gray)); }
-			.breadcrumb a { color: var(--accent); text-decoration: none; }
-			.breadcrumb a:hover { text-decoration: underline; }
-			.breadcrumb span { margin: 0 0.4rem; }
-
 			.page-header {
 				background: linear-gradient(135deg, #fff0f5 0%, #fce8ef 45%, #fffafc 100%);
 				padding: 3rem 1.5rem 2.5rem;
@@ -351,15 +347,12 @@ const diasSemana = {
 			<!-- ════════════ SUBCITY LISTING PAGE ════════════ -->
 			<Fragment>
 				<div class="container">
-					<nav class="breadcrumb">
-						<a href="/">Inicio</a>
-						<span>/</span>
-						<a href="/#directorio">Directorio</a>
-						<span>/</span>
-						<a href={`/directorio/${provincia}/`}>{prov.nombre}</a>
-						<span>/</span>
-						{subcityNombre}
-					</nav>
+					<Breadcrumb items={[
+						{ label: 'Inicio', href: '/' },
+						{ label: 'Directorio', href: '/#directorio' },
+						{ label: prov.nombre, href: `/directorio/${provincia}/` },
+						{ label: subcityNombre },
+					]} />
 				</div>
 
 				<section class="page-header">
@@ -452,15 +445,12 @@ const diasSemana = {
 			<!-- ════════════ CAPITAL BUSINESS DETAIL PAGE ════════════ -->
 			<Fragment>
 				<div class="container">
-					<nav class="breadcrumb">
-						<a href="/">Inicio</a>
-						<span>/</span>
-						<a href="/#directorio">Directorio</a>
-						<span>/</span>
-						<a href={`/directorio/${provincia}/`}>{prov.nombre}</a>
-						<span>/</span>
-						{negocio.nombre}
-					</nav>
+					<Breadcrumb items={[
+						{ label: 'Inicio', href: '/' },
+						{ label: 'Directorio', href: '/#directorio' },
+						{ label: prov.nombre, href: `/directorio/${provincia}/` },
+						{ label: negocio.nombre },
+					]} />
 				</div>
 
 				<div class="container">
