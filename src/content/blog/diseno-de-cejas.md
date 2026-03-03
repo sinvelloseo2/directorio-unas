@@ -2,7 +2,8 @@
 title: 'Diseño de Cejas: Técnicas y Consejos para Lucir Cejas Perfectas'
 description: 'Guía completa sobre diseño de cejas: microblading, laminado, henna, hilo y cera. Precios en España, cuánto dura cada técnica y cómo elegir la forma ideal para tu rostro.'
 pubDate: 'Mar 03 2026'
-heroImage: '../../assets/blog-placeholder-3.jpg'
+heroImage: '../../assets/diseno-cejas.jpg'
+heroImageAlt: 'Diseño profesional de cejas con técnica de hilo para conseguir la forma perfecta'
 ---
 
 Las cejas enmarcan la mirada y pueden cambiar por completo la expresión de tu rostro. Un buen diseño de cejas es la base de cualquier look de belleza. En esta guía te contamos las técnicas más populares en España, qué precio tienen y cómo elegir la que mejor te va.

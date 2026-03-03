@@ -3,6 +3,7 @@ title: 'Lifting de Pestañas: Qué Es, Cuánto Dura y Todo lo que Debes Saber'
 description: 'Guía completa sobre el lifting de pestañas: en qué consiste, cuánto dura el resultado, si duele, precio en España y cómo cuidar el resultado en casa.'
 pubDate: 'Jan 15 2026'
 heroImage: '../../assets/lifting-pestanas.jpg'
+heroImageAlt: 'Resultado del lifting de pestañas con pestañas naturales rizadas y elevadas'
 ---
 
 El lifting de pestañas es uno de los tratamientos de belleza que más ha crecido en popularidad en los últimos años en España. Si alguna vez has pensado en tener las pestañas rizadas, elevadas y con aspecto de máscara sin necesidad de maquillarte cada día, esto te interesa.
@@ -78,8 +79,10 @@ Es ideal para personas con pestañas naturales suficientes (no sirve si tienes m
 - Se maquillan todos los días y quieren ahorrar tiempo
 - Tienen pestañas rectas que apuntan hacia abajo
 - Prefieren un look natural pero definido
-- Quieren una alternativa menos mantenimiento que las extensiones
+- Quieren una alternativa con menos mantenimiento que las [extensiones de pestañas](/blog/extensiones-de-pestanas)
 
 ## ¿Dónde hacerse el lifting de pestañas?
 
 En España lo ofrecen principalmente salones de uñas y belleza, centros de estética y estudios especializados en ojos (cejas y pestañas). Es importante buscar un profesional con experiencia porque un proceso mal ejecutado puede quemar o debilitar las pestañas.
+
+Si te interesa completar tu look de mirada, consulta nuestra guía de [diseño de cejas](/blog/diseno-de-cejas) y nuestra comparativa completa de [tratamientos de pestañas y cejas](/blog/pestanas-y-cejas).

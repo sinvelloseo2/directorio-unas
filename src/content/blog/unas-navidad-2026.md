@@ -2,7 +2,8 @@
 title: 'Uñas de Navidad 2026: Diseños y Colores para Brillar en las Fiestas'
 description: 'Descubre los mejores diseños de uñas para Navidad 2026: colores festivos, nail art navideño, brillos, rojos clásicos y tendencias que arrasan en los salones de España.'
 pubDate: 'Mar 03 2026'
-heroImage: '../../assets/blog-placeholder-1.jpg'
+heroImage: '../../assets/unas-navidad.jpg'
+heroImageAlt: 'Uñas navideñas con diseño de copos de nieve y glitter dorado sobre fondo festivo'
 ---
 
 La Navidad es la época del año en la que más nos apetece llevar las uñas perfectas. Entre cenas de empresa, Nochebuena y fin de año, tus manos van a estar muy expuestas. Aquí tienes las tendencias de uñas navideñas que triunfan en los salones españoles en 2026.

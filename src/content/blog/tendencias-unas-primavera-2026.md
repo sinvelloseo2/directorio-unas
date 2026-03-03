@@ -3,6 +3,7 @@ title: 'Tendencias de Uñas Primavera 2026: Colores y Diseños que Debes Probar'
 description: 'Los colores y diseños de uñas más tendencia para la primavera 2026: desde los pasteles hasta el nail art floral. Inspírate para tu próxima manicura.'
 pubDate: 'Jan 20 2026'
 heroImage: '../../assets/tendencias-primavera.jpg'
+heroImageAlt: 'Tendencias de uñas primavera 2026 con colores pastel lavanda y verde menta'
 ---
 
 La primavera trae consigo una renovación total del armario y, por supuesto, de la manicura. Los tonos de invierno —oscuros, profundos y metálicos— dan paso a una paleta más luminosa, fresca y llena de vida. Aquí tienes las tendencias de uñas que dominarán la primavera 2026.
@@ -19,7 +20,7 @@ Los verdes fríos y pálidos están en su mejor momento. El menta, el pistacho y
 
 ### Azul bebé y celeste
 
-El azul en sus tonos más pastel es uno de los grandes de esta primavera. Del azul bebé al sky blue, este color aporta calma y luminosidad. En semipermanente queda impecable.
+El azul en sus tonos más pastel es uno de los grandes de esta primavera. Del azul bebé al sky blue, este color aporta calma y luminosidad. En [semipermanente](/blog/manicura-semipermanente) queda impecable.
 
 ### Coral y melocotón
 
@@ -73,3 +74,5 @@ No hace falta esperar al 21 de marzo. En cuanto salga el sol con más fuerza (fe
 ## Dónde inspirarte para tu manicura de primavera
 
 Las mejores fuentes de inspiración para nail art son Pinterest, TikTok (busca #nailart o #unasprimavera2026) e Instagram. Los perfiles de nail artists españolas ofrecen además una buena referencia de precios y disponibilidad si buscas salón.
+
+¿Ya pensando en la siguiente temporada? Descubre las [tendencias de uñas para verano 2026](/blog/unas-verano-2026). Si buscas ideas para [uñas cortas](/blog/unas-cortas-disenos), también tenemos una guía dedicada. Y para la francesa de color que tanto se lleva, consulta nuestra guía de [uñas francesas 2026](/blog/unas-francesas-2026).

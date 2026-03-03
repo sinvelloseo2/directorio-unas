@@ -3,6 +3,7 @@ title: 'Manicura Semipermanente: Ventajas, Cuánto Dura y Cómo Cuidarla'
 description: 'Guía completa sobre la manicura semipermanente: diferencias con el gel, duración real, cómo se retira y por qué es la opción favorita en los salones de uñas.'
 pubDate: 'Jan 28 2026'
 heroImage: '../../assets/semipermanente.jpg'
+heroImageAlt: 'Manicura semipermanente recién aplicada con acabado brillante en salón de uñas'
 ---
 
 La manicura semipermanente se ha convertido en el servicio más solicitado en los salones de uñas de España. Combina la facilidad de aplicación del esmalte con la durabilidad del gel, y el resultado es unas uñas perfectas durante semanas. Aquí te explicamos todo lo que necesitas saber.
@@ -18,7 +19,7 @@ A diferencia del gel de construcción, el semipermanente no alarga ni engrosa la
 Mucha gente confunde ambos términos. La diferencia principal:
 
 - **Semipermanente (gel polish):** se aplica como un esmalte, en capas muy finas, sobre la uña natural
-- **Gel de construcción:** se usa para crear estructura, alargar o engrossar la uña
+- **[Gel de construcción](/blog/unas-de-gel-guia-completa):** se usa para crear estructura, alargar o engrossar la uña
 
 Ambos se curan con lámpara LED/UV, pero el proceso y el resultado son diferentes. El semipermanente es más ligero y natural; el gel de construcción es más grueso y resistente.
 
@@ -58,11 +59,11 @@ El proceso correcto:
 5. Retira deslizando el algodón: el esmalte debe salir solo
 6. Hidrata después con aceite de cutículas y crema de manos
 
-**Nunca arranques el semipermanente.** Es el error más común y el que más daña la uña.
+**Nunca arranques el semipermanente.** Es el error más común y el que más daña la uña. Aprende a hacerlo correctamente en nuestra guía de [cómo quitar el gel en casa](/blog/como-quitar-gel-casa).
 
 ## ¿Con qué frecuencia hacerse la manicura semipermanente?
 
-Lo ideal es esperar a que el semipermanente lleve 3 semanas y hacerse el cambio entonces. Si te lo haces cada 2 semanas, la uña no tiene tiempo de recuperarse entre aplicaciones. En caso de querer un descanso, usa aceite de cutículas y un endurecedor de uñas.
+Lo ideal es esperar a que el semipermanente lleve 3 semanas y hacerse el cambio entonces. Si te lo haces cada 2 semanas, la uña no tiene tiempo de recuperarse entre aplicaciones. En caso de querer un descanso, usa [aceite de cutículas](/blog/aceite-de-cuticulas) y un endurecedor de uñas. Si notas tus uñas debilitadas, consulta nuestra guía de [uñas débiles y soluciones](/blog/unas-debiles-soluciones).
 
 ## Precio del semipermanente en España
 
@@ -72,7 +73,7 @@ El precio medio de una manicura semipermanente en salón en España:
 - **Manos y pies:** 40-60 €
 - **Con nail art sencillo:** +5-15 €
 
-En salones de franquicia (Hello Nails, Nails Factory) suelen tener precios algo más estandarizados y económicos que en salones independientes.
+En salones de franquicia (Hello Nails, Nails Factory) suelen tener precios algo más estandarizados y económicos que en salones independientes. Consulta nuestra [guía completa de precios de manicura en España](/blog/precio-manicura-espana) para más detalle.
 
 ## Los colores de semipermanente más tendencia en 2026
 

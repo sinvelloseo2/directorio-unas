@@ -3,6 +3,7 @@ title: 'Uñas Otoño 2026: Los Colores y Diseños que Arrasan Esta Temporada'
 description: 'Tendencias de uñas para otoño 2026: terracota, burdeos, marrones tostados y los diseños de nail art más otoñales. Los colores que arrasan en septiembre y octubre.'
 pubDate: 'Feb 22 2026'
 heroImage: '../../assets/unas-otono.jpg'
+heroImageAlt: 'Uñas otoño 2026 en tonos terracota, burdeos y marrón tostado con hojas secas'
 ---
 
 Cuando llega el otoño, el mundo del nail art cambia radicalmente. Los neones del verano dejan paso a paletas ricas, profundas y sofisticadas que combinan con las hojas doradas y los cielos grises. El otoño 2026 trae una paleta especialmente interesante: tonos tierra elevados a su máximo potencial artístico.
@@ -68,7 +69,7 @@ En otoño se llevan especialmente formas que añaden elegancia:
 ## Técnicas recomendadas para otoño
 
 El otoño es una época perfecta para el gel y el semipermanente:
-- Las temperaturas más frescas ayudan a que el gel dure más
+- Las temperaturas más frescas ayudan a que el [gel dure más](/blog/cuanto-dura-gel)
 - Menos exposición al cloro y al mar que en verano
 - El regreso a la rutina laboral hace que una manicura duradera sea especialmente práctica
 
@@ -90,3 +91,5 @@ Algunas combinaciones que funcionan especialmente bien en otoño:
 - Las colecciones de esmaltes de otoño de marcas como OPI, Essie y China Glaze
 
 El otoño 2026 invita a abrazar los colores de la tierra y los tonos más profundos de la naturaleza. Es la temporada perfecta para experimentar con texturas, acabados metálicos y diseños más elaborados. Atrévete con el burdeos, la terracota y el verde botella: no te decepcionarán.
+
+Si vienes del [verano](/blog/unas-verano-2026), aprovecha para [cuidar tus uñas](/blog/cuidado-de-unas) después del sol y el cloro. Y cuando llegue diciembre, prepárate con nuestras [tendencias de uñas navideñas](/blog/unas-navidad-2026). Elige tu técnica ideal con nuestra [guía de comparativas](/blog/comparativas-manicura).

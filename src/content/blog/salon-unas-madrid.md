@@ -2,7 +2,8 @@
 title: 'Salones de Uñas en Madrid: Guía para Encontrar el Mejor'
 description: 'Guía para encontrar los mejores salones de uñas en Madrid: qué buscar, zonas con más oferta, precios medios por barrio, señales de un buen salón y consejos antes de reservar.'
 pubDate: 'Mar 03 2026'
-heroImage: '../../assets/blog-placeholder-1.jpg'
+heroImage: '../../assets/salon-unas-madrid.jpg'
+heroImageAlt: 'Interior de nail bar moderno en Madrid con estaciones de manicura profesional'
 ---
 
 Madrid tiene una oferta enorme de salones de uñas, desde nail bars modernos en Malasaña hasta centros de estética clásicos en Salamanca. Con tanta variedad, elegir bien puede ser complicado. Esta guía te ayuda a encontrar el salón que mejor se adapte a lo que buscas.

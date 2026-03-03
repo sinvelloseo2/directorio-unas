@@ -2,7 +2,8 @@
 title: 'Pestañas y Cejas: Guía Completa de Tratamientos para tu Mirada'
 description: 'Todo sobre tratamientos de pestañas y cejas: lifting, extensiones, laminado, microblading, henna y más. Compara técnicas, precios en España y elige el mejor para ti.'
 pubDate: 'Mar 03 2026'
-heroImage: '../../assets/blog-placeholder-4.jpg'
+heroImage: '../../assets/pestanas-cejas.jpg'
+heroImageAlt: 'Tratamiento profesional de pestañas y cejas en centro de estética'
 ---
 
 Las pestañas y las cejas enmarcan la mirada y pueden transformar tu aspecto por completo. En los últimos años, los tratamientos especializados han evolucionado mucho: ya no se trata solo de depilarse las cejas o ponerse máscara de pestañas. Hay opciones profesionales para cada necesidad y presupuesto.

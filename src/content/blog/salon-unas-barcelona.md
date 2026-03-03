@@ -2,7 +2,8 @@
 title: 'Salones de Uñas en Barcelona: Guía de los Mejores Nail Bars'
 description: 'Encuentra los mejores salones de uñas en Barcelona: zonas con más oferta, precios por barrio, qué buscar en un buen nail bar y consejos para tu primera visita.'
 pubDate: 'Mar 03 2026'
-heroImage: '../../assets/blog-placeholder-2.jpg'
+heroImage: '../../assets/salon-unas-barcelona.jpg'
+heroImageAlt: 'Salón de uñas en Barcelona con ambiente moderno y buena iluminación natural'
 ---
 
 Barcelona se ha consolidado como una de las ciudades con mejor oferta de nail art en España. Desde el Born hasta Gràcia, pasando por el Eixample, hay salones para todos los gustos y presupuestos. Te contamos cómo elegir bien.

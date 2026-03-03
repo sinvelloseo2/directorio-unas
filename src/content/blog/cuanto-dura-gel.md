@@ -3,6 +3,7 @@ title: '¿Cuánto Dura el Gel en las Uñas? Guía Completa por Técnica'
 description: 'Descubre cuánto dura el gel en las uñas según la técnica: gel polish, gel de construcción, semipermanente. Factores que afectan la duración y consejos para que dure más.'
 pubDate: 'Feb 01 2026'
 heroImage: '../../assets/cuanto-dura-gel.jpg'
+heroImageAlt: 'Uñas de gel en perfecto estado después de tres semanas de uso diario'
 ---
 
 "¿Cuánto me dura el gel?" es la primera pregunta que hacemos en el salón. La respuesta depende del tipo de gel, de la técnica de aplicación, de tu cuidado posterior y de factores personales como el crecimiento de tu uña. Te lo explicamos todo con detalle.
@@ -12,7 +13,7 @@ heroImage: '../../assets/cuanto-dura-gel.jpg'
 ### Gel polish / Semipermanente
 **Duración media: 2 a 3 semanas**
 
-Es el tipo de gel más popular: se aplica como un esmalte pero se cura bajo lámpara UV/LED. Al ser una capa fina, empieza a notarse el crecimiento de la uña natural antes que otras técnicas.
+Es el tipo de [gel](/blog/unas-de-gel-guia-completa) más popular: se aplica como un [esmalte semipermanente](/blog/manicura-semipermanente) pero se cura bajo lámpara UV/LED. Al ser una capa fina, empieza a notarse el crecimiento de la uña natural antes que otras técnicas.
 
 ¿Cuándo hay que retirarlo?
 - Cuando el hueco de crecimiento natural sea visible y estéticamente molesto
@@ -81,7 +82,7 @@ Si llevas el gel menos de dos semanas, puede deberse a:
 - No uses las uñas para abrir o rascar
 
 **Mantenimiento diario:**
-- **Aplica aceite de cutículas** al menos una vez al día, preferiblemente antes de dormir
+- **Aplica [aceite de cutículas](/blog/aceite-de-cuticulas)** al menos una vez al día, preferiblemente antes de dormir
 - **Usa guantes para fregar y limpiar** siempre
 - **Aplica protector solar** también en las manos
 - **Evita usar las uñas como herramientas** (abrir latas, rascar etiquetas...)
@@ -108,4 +109,4 @@ Sí, aplicar un top coat sobre el gel existente puede devolverle el brillo y pro
 No pegues el gel levantado: puede acumular humedad debajo y causar infecciones por hongos. Acude al salón para un retoque.
 
 **¿Es normal que dure menos en verano?**
-Sí. El calor, la playa, el cloro de la piscina y la mayor exposición al agua hacen que el gel dure algo menos en verano. Es normal y esperable.
+Sí. El calor, la playa, el cloro de la piscina y la mayor exposición al agua hacen que el gel dure algo menos en verano. Es normal y esperable. Consulta nuestros consejos de [cuidados de uñas en verano](/blog/unas-verano-2026) y cómo [retirar el gel en casa](/blog/como-quitar-gel-casa) correctamente.

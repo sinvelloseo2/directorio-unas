@@ -2,7 +2,8 @@
 title: 'Extensiones de Pestañas: Tipos, Duración y Precio en España 2026'
 description: 'Todo sobre extensiones de pestañas: tipos (pelo a pelo, volumen ruso, híbridas), cuánto duran, precios en España, cuidados y diferencias con el lifting de pestañas.'
 pubDate: 'Mar 03 2026'
-heroImage: '../../assets/blog-placeholder-2.jpg'
+heroImage: '../../assets/extensiones-pestanas.jpg'
+heroImageAlt: 'Extensiones de pestañas pelo a pelo para una mirada natural y definida'
 ---
 
 Las extensiones de pestañas han pasado de ser un lujo a convertirse en uno de los tratamientos de belleza más demandados en España. Si estás pensando en ponértelas, aquí tienes todo lo que necesitas saber antes de ir al salón.

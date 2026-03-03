@@ -3,6 +3,7 @@ title: 'Diseños de Uñas Cortas: Las Mejores Ideas para Manicura Corta'
 description: 'Las uñas cortas también son tendencia. Descubre los mejores diseños, colores y técnicas de nail art para uñas cortas que están arrasando en 2026.'
 pubDate: 'Jan 08 2026'
 heroImage: '../../assets/unas-cortas.jpg'
+heroImageAlt: 'Diseños de nail art minimalista en uñas cortas con colores de tendencia 2026'
 ---
 
 Tener las uñas cortas no significa renunciar a una manicura espectacular. De hecho, en 2026 las uñas cortas son más tendencia que nunca: son prácticas, modernas y permiten lucir diseños que en uñas largas quedarían recargados. Si siempre has creído que el nail art era solo para uñas largas, este artículo va a cambiar tu forma de verlo.
@@ -30,7 +31,7 @@ La combinación entre cuadrada y oval: bordes rectos pero con las esquinas liger
 Uno de los looks más actuales es elegir un color llamativo y aplicarlo con acabado mate. El resultado es sofisticado y moderno, y en uñas cortas queda especialmente bien porque el color es el protagonista.
 
 ### Francesa minimalista
-La manicura francesa en uñas cortas es perfecta porque la sonrisa de la punta no necesita ser muy ancha. En 2026 se lleva la francesa de color (punta en lavanda, azul o verde) o la francesa micro (línea muy fina).
+La [manicura francesa](/blog/unas-francesas-2026) en uñas cortas es perfecta porque la sonrisa de la punta no necesita ser muy ancha. En 2026 se lleva la francesa de color (punta en lavanda, azul o verde) o la francesa micro (línea muy fina).
 
 ### Puntos estratégicos
 Un punto grande en el centro de la uña, puntos pequeños en los bordes o una línea de puntos en la cutícula son recursos de nail art muy limpios que funcionan perfecto en uñas cortas. Se hacen fácil con un dotting tool.
@@ -63,4 +64,4 @@ Evita los colores muy claros sin diseño (tipo blanco puro o nude muy claro) si 
 
 ## Duración de la manicura en uñas cortas
 
-Las uñas cortas tienen la ventaja de que la manicura dura más: al haber menos uña libre, hay menos riesgo de rotura o astillado. Con semipermanente puedes esperar tranquilamente 3 semanas. Con esmalte normal, unos 5-7 días con top coat de buena calidad.
+Las uñas cortas tienen la ventaja de que la manicura dura más: al haber menos uña libre, hay menos riesgo de rotura o astillado. Con [semipermanente](/blog/manicura-semipermanente) puedes esperar tranquilamente 3 semanas. Con esmalte normal, unos 5-7 días con top coat de buena calidad. Descubre más diseños en nuestras guías de [tendencias primavera 2026](/blog/tendencias-unas-primavera-2026) y [tendencias verano 2026](/blog/unas-verano-2026).

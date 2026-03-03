@@ -2,7 +2,8 @@
 title: 'Aceite de Cutículas: Por Qué Usarlo y Cuál Elegir en 2026'
 description: 'Todo sobre el aceite de cutículas: para qué sirve, cómo usarlo correctamente, los mejores ingredientes, productos recomendados y por qué es el secreto de las uñas bonitas.'
 pubDate: 'Mar 03 2026'
-heroImage: '../../assets/blog-placeholder-5.jpg'
+heroImage: '../../assets/aceite-cuticulas.jpg'
+heroImageAlt: 'Aplicación de aceite de cutículas con cuentagotas sobre uñas cuidadas'
 ---
 
 El aceite de cutículas es probablemente el producto de cuidado de uñas más infravalorado. Mientras nos gastamos dinero en manicuras perfectas, nos olvidamos de lo que realmente mantiene las uñas sanas por dentro. Si solo pudieras tener un producto para tus uñas, debería ser este.

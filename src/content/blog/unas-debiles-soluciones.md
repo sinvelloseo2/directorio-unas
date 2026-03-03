@@ -2,7 +2,8 @@
 title: 'Uñas Débiles y Quebradizas: Causas y Soluciones que Funcionan'
 description: 'Descubre por qué tienes las uñas débiles, quebradizas o que se rompen fácilmente. Causas reales, remedios que funcionan, productos recomendados y cuándo ir al dermatólogo.'
 pubDate: 'Mar 03 2026'
-heroImage: '../../assets/blog-placeholder-4.jpg'
+heroImage: '../../assets/unas-debiles.jpg'
+heroImageAlt: 'Uñas naturales débiles y quebradizas que necesitan tratamiento fortalecedor'
 ---
 
 Tener las uñas débiles que se rompen, se descaman o se doblan es una de las quejas más comunes en los salones de belleza. Antes de buscar soluciones, necesitas entender por qué te pasa. No todas las uñas débiles se tratan igual.

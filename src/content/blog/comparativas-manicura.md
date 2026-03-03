@@ -2,7 +2,8 @@
 title: 'Comparativas de Manicura: ¿Qué Técnica Elegir para tus Uñas?'
 description: 'Compara todas las técnicas de manicura: gel vs acrílico vs semipermanente. Duración, precios en España, ventajas, inconvenientes y cuál es la mejor según tu estilo de vida.'
 pubDate: 'Mar 03 2026'
-heroImage: '../../assets/blog-placeholder-1.jpg'
+heroImage: '../../assets/comparativas-manicura.jpg'
+heroImageAlt: 'Comparación de técnicas de manicura: gel, acrílico y semipermanente lado a lado'
 ---
 
 "¿Gel o acrílico?" "¿Semipermanente o gel?" "¿Cuál dura más?" Son las preguntas que más escuchan los técnicos de uñas en España. Cada técnica tiene sus ventajas y sus inconvenientes, y la mejor opción depende de tu estilo de vida, tu presupuesto y lo que esperas de tu manicura.

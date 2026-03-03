@@ -2,7 +2,8 @@
 title: 'Salones de Uñas en España: Cómo Encontrar el Mejor Cerca de Ti'
 description: 'Guía para encontrar los mejores salones de uñas en España: qué buscar, cómo comparar, precios medios por ciudad, tipos de salones y señales de calidad.'
 pubDate: 'Mar 03 2026'
-heroImage: '../../assets/blog-placeholder-3.jpg'
+heroImage: '../../assets/salones-unas-espana.jpg'
+heroImageAlt: 'Salón de uñas en España con manicurista profesional atendiendo clienta'
 ---
 
 Buscar "uñas cerca de mí" en Google se ha convertido en una de las búsquedas de belleza más frecuentes en España. La oferta de salones ha crecido enormemente en los últimos años, pero no todos ofrecen la misma calidad. Esta guía te ayuda a elegir bien, estés donde estés.

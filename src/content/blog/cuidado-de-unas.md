@@ -2,7 +2,8 @@
 title: 'Cuidado de Uñas: Cómo Mantenerlas Sanas y Bonitas'
 description: 'Guía completa de cuidado de uñas: rutinas diarias, productos esenciales, cómo fortalecer uñas débiles, errores comunes y cuándo visitar al dermatólogo.'
 pubDate: 'Mar 03 2026'
-heroImage: '../../assets/blog-placeholder-5.jpg'
+heroImage: '../../assets/cuidado-unas.jpg'
+heroImageAlt: 'Rutina de cuidado de uñas naturales con aceite de cutículas y lima de cristal'
 ---
 
 Tener las uñas bonitas no es solo cuestión de ir al salón. La salud de tus uñas depende de los cuidados diarios que les das entre manicura y manicura. Si tus uñas se rompen, se descaman o tienen mal aspecto, probablemente necesitas mejorar tu rutina de cuidados.
