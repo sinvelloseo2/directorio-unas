@@ -1,0 +1,154 @@
+---
+// Cookie consent banner — RGPD / LSSI (España)
+---
+
+<div id="cookie-banner" class="cookie-banner" role="dialog" aria-label="Consentimiento de cookies">
+	<div class="cookie-inner">
+		<div class="cookie-text">
+			<p>
+				Usamos cookies propias y de terceros para mejorar tu experiencia, analizar el tráfico y personalizar contenido.
+				Puedes aceptar todas, solo las esenciales o consultar nuestra
+				<a href="/politica-cookies">política de cookies</a>.
+			</p>
+		</div>
+		<div class="cookie-actions">
+			<button id="cookie-reject" class="cookie-btn cookie-btn--outline" type="button">Solo esenciales</button>
+			<button id="cookie-accept" class="cookie-btn cookie-btn--primary" type="button">Aceptar todas</button>
+		</div>
+	</div>
+</div>
+
+<script>
+	const COOKIE_KEY = 'cookie_consent';
+
+	function hideBanner() {
+		const banner = document.getElementById('cookie-banner');
+		if (banner) {
+			banner.classList.add('cookie-banner--hidden');
+			setTimeout(() => { banner.style.display = 'none'; }, 350);
+		}
+	}
+
+	function setConsent(value: string) {
+		localStorage.setItem(COOKIE_KEY, value);
+		hideBanner();
+	}
+
+	// Show banner only if no consent stored
+	if (localStorage.getItem(COOKIE_KEY)) {
+		const banner = document.getElementById('cookie-banner');
+		if (banner) banner.style.display = 'none';
+	}
+
+	document.getElementById('cookie-accept')?.addEventListener('click', () => setConsent('all'));
+	document.getElementById('cookie-reject')?.addEventListener('click', () => setConsent('essential'));
+</script>
+
+<style>
+	.cookie-banner {
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		z-index: 9999;
+		background: rgba(26, 26, 46, 0.95);
+		backdrop-filter: blur(12px);
+		-webkit-backdrop-filter: blur(12px);
+		border-top: 1px solid rgba(200, 57, 92, 0.25);
+		padding: 1.25rem 1.5rem;
+		transform: translateY(0);
+		transition: transform 0.35s ease, opacity 0.35s ease;
+		opacity: 1;
+	}
+
+	.cookie-banner--hidden {
+		transform: translateY(100%);
+		opacity: 0;
+	}
+
+	.cookie-inner {
+		max-width: 1200px;
+		margin: 0 auto;
+		display: flex;
+		align-items: center;
+		gap: 1.5rem;
+	}
+
+	.cookie-text p {
+		margin: 0;
+		color: rgba(255, 255, 255, 0.88);
+		font-size: 0.9rem;
+		line-height: 1.55;
+	}
+
+	.cookie-text a {
+		color: var(--accent, #c8395c);
+		text-decoration: underline;
+		text-underline-offset: 2px;
+	}
+
+	.cookie-text a:hover {
+		color: var(--gold, #c9956e);
+	}
+
+	.cookie-actions {
+		display: flex;
+		gap: 0.75rem;
+		flex-shrink: 0;
+	}
+
+	.cookie-btn {
+		font-family: 'Atkinson', sans-serif;
+		font-size: 0.85rem;
+		font-weight: 700;
+		padding: 0.6rem 1.4rem;
+		border-radius: 50px;
+		cursor: pointer;
+		transition: all 0.2s ease;
+		white-space: nowrap;
+		border: none;
+	}
+
+	.cookie-btn--primary {
+		background: var(--accent, #c8395c);
+		color: #fff;
+		box-shadow: 0 4px 16px rgba(200, 57, 92, 0.28);
+	}
+
+	.cookie-btn--primary:hover {
+		background: var(--accent-dark, #8b1a35);
+		transform: translateY(-1px);
+		box-shadow: 0 6px 20px rgba(200, 57, 92, 0.35);
+	}
+
+	.cookie-btn--outline {
+		background: transparent;
+		color: rgba(255, 255, 255, 0.85);
+		border: 1.5px solid rgba(255, 255, 255, 0.3);
+	}
+
+	.cookie-btn--outline:hover {
+		background: rgba(255, 255, 255, 0.08);
+		border-color: rgba(255, 255, 255, 0.5);
+		transform: translateY(-1px);
+	}
+
+	/* Mobile */
+	@media (max-width: 640px) {
+		.cookie-inner {
+			flex-direction: column;
+			text-align: center;
+			gap: 1rem;
+		}
+
+		.cookie-actions {
+			width: 100%;
+			justify-content: center;
+		}
+
+		.cookie-btn {
+			flex: 1;
+			padding: 0.65rem 1rem;
+		}
+	}
+</style>
