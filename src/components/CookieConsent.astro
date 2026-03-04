@@ -34,10 +34,19 @@
 		hideBanner();
 	}
 
-	// Show banner only if no consent stored
+	const banner = document.getElementById('cookie-banner');
+
 	if (localStorage.getItem(COOKIE_KEY)) {
-		const banner = document.getElementById('cookie-banner');
+		// Already consented — hide immediately
 		if (banner) banner.style.display = 'none';
+	} else {
+		// First visit — start hidden, show after 3 seconds
+		if (banner) {
+			banner.classList.add('cookie-banner--hidden');
+			setTimeout(() => {
+				banner.classList.remove('cookie-banner--hidden');
+			}, 3000);
+		}
 	}
 
 	document.getElementById('cookie-accept')?.addEventListener('click', () => setConsent('all'));
